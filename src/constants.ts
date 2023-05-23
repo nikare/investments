@@ -16,5 +16,5 @@ export const MONTHS = [
 export const REAL_RESULTS: {
   [key: number]: { invested: number; capital: number; taken?: number } | undefined;
 } = {
-  1: { invested: 125000, capital: 135325 },
+  1: { invested: 126000, capital: 137380 },
 };
