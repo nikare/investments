@@ -92,7 +92,7 @@ export const App = () => {
           {dataArray.map(({ eq, date, invested, realInvested, capital, realCapital, taken }) => {
             const capitalDifference = realCapital && realCapital - capital;
             const isAllRight = capitalDifference && capitalDifference >= 0;
-            const correction = invested - Number(realInvested);
+            const correction = Math.max(invested - Number(realInvested), -deposit);
             const invest = isAllRight
               ? deposit + correction
               : Math.min(deposit * 2, deposit * 2 + correction);
