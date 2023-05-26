@@ -30,14 +30,11 @@ export const App = () => {
       const prevDividends = newDataArray.reduce((accum, data) => {
         return (
           accum +
-          (eq % MONTHS.length === data.eq % MONTHS.length
-            ? (data.dividends / 100) * dividendsYield
-            : 0)
+          (eq % MONTHS.length === data.eq % MONTHS.length ? (data.dividends / 100) * dividendsYield : 0)
         );
       }, 0);
 
-      capital =
-        (inflation / MONTHS.length / 100) * capital + capital + deposit + dividend + prevDividends;
+      capital = (inflation / MONTHS.length / 100) * capital + capital + deposit + dividend + prevDividends;
 
       const data: IData = {
         eq: eq,
@@ -95,8 +92,12 @@ export const App = () => {
           {dataArray.map(({ eq, date, invested, realInvested, capital, realCapital, taken }) => {
             const capitalDifference = realCapital && realCapital - capital;
             const isAllRight = capitalDifference && capitalDifference >= 0;
-            const invest = isAllRight ? deposit : deposit * 2;
+            const correction = invested - Number(realInvested);
+            const invest = isAllRight
+              ? deposit + correction
+              : Math.min(deposit * 2, deposit * 2 + correction);
             const className = realCapital ? (isAllRight ? 'success' : 'noSuccess') : undefined;
+
             return (
               <tr key={eq}>
                 <td>{eq}</td>
