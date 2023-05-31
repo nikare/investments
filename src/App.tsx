@@ -105,7 +105,7 @@ export const App = () => {
                 <td>{invested.toLocaleString('ru-RU')} ₽</td>
                 <td>{realInvested ? `${realInvested.toLocaleString('ru-RU')} ₽` : '-'}</td>
                 <td>{taken ? `${taken.toLocaleString('ru-RU')} ₽` : '-'}</td>
-                <td>{Math.round(capital).toLocaleString('ru-RU')} ₽</td>
+                <td>{(Math.round(capital / 1000) * 1000).toLocaleString('ru-RU')} ₽</td>
                 <td>{realCapital ? `${realCapital.toLocaleString('ru-RU')} ₽` : '-'}</td>
                 <td className={['td-center', className].join(' ')}>{!isAllRight && '-'}</td>
                 <td>{realCapital ? `${invest.toLocaleString('ru-RU')} ₽` : '-'}</td>
