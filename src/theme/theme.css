@@ -1,10 +1,9 @@
 .app {
   max-width: 1600px;
-  min-width: 1400px;
   min-height: 100%;
   font-family: 'Open Sans', sans-serif;
   color: #001e26;
-  padding: 0 30px 30px;
+  padding: 0 30px;
   margin: 0 auto;
 }
 
@@ -38,11 +37,18 @@
   color: white;
 }
 
+.table th,
+.table td {
+  line-height: 1;
+  padding: 0.719em 1em;
+}
+
 .table th {
   font-size: 12px;
 }
 
 .table td {
+  font-size: 16px;
   border: 1px solid silver;
 }
 
@@ -54,17 +60,35 @@
   text-align: center;
 }
 
-.success,
-.noSuccess {
+.positive,
+.negative {
   background-position: 50%;
   background-repeat: no-repeat;
   background-size: 24px auto;
 }
 
-.success {
+.positive {
   background-image: url('./images/success.svg');
 }
 
-.noSuccess {
+.negative {
   background-image: url('./images/no-success.svg');
+}
+
+.positive-text,
+.negative-text {
+  font-size: 13px;
+  line-height: inherit;
+  font-weight: 700;
+  margin-left: 5px;
+}
+
+.positive-text {
+  vertical-align: top;
+  color: #5cd59b;
+}
+
+.negative-text {
+  vertical-align: bottom;
+  color: #f27362;
 }

@@ -1,11 +1,12 @@
 export interface IData {
   eq: number;
-  date: string;
-  invested: number;
+  month: string;
+  year: number;
   realInvested: number | null;
-  taken: number | null;
   dividends: number;
   prevDividends: number;
   capital: number;
   realCapital: number | null;
+  lastYearsCapital: number | null;
+  lastMonthCapital: number | null;
 }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Fragment } from 'react';
 import { useStore } from 'hooks';
 
 import { MONTHS, REAL_RESULTS } from './constants';
@@ -34,18 +34,20 @@ export const App = () => {
         );
       }, 0);
 
-      capital = (inflation / MONTHS.length / 100) * capital + capital + deposit + dividend + prevDividends;
+      const capitalGrowth = (inflation / MONTHS.length / 100) * (capital + deposit);
+      capital = capitalGrowth + capital + deposit + dividend + prevDividends;
 
       const data: IData = {
         eq: eq,
-        date: `${MONTHS[monthEq]} ${realYear}`,
-        invested: deposit * eq,
-        taken: REAL_RESULTS[eq]?.taken || null,
+        month: MONTHS[monthEq],
+        year: realYear,
         realInvested: REAL_RESULTS[eq]?.invested || null,
         dividends: dividend,
         prevDividends: prevDividends,
         capital: capital,
         realCapital: REAL_RESULTS[eq]?.capital || null,
+        lastYearsCapital: newDataArray[eq - MONTHS.length]?.realCapital || null,
+        lastMonthCapital: newDataArray[eq - 1]?.realCapital || null,
       };
       newDataArray.push(data);
     }
@@ -79,50 +81,159 @@ export const App = () => {
           <tr>
             <th>#</th>
             <th>Месяц и год</th>
-            <th>Минимальные вложения</th>
-            <th>Фактически вложено</th>
-            <th>Снято со счёта</th>
-            <th>Прогнозируемый портфель</th>
+            <th>Вложено</th>
+            <th>Прибыль за месяц</th>
+            <th>Прибыль за 12 месяцев</th>
+            <th>Суммарная прибыль</th>
+            <th>Годовых (%)</th>
             <th>Фактический портфель</th>
+            <th>Ожидаемый портфель</th>
             <th>По плану?</th>
-            <th>Следующее пополнение</th>
+            <th>След. пополнение</th>
           </tr>
         </thead>
         <tbody>
-          {dataArray.map(({ eq, date, invested, realInvested, capital, realCapital, taken }) => {
-            const capitalDifference = realCapital && realCapital - capital;
-            const isAllRight = capitalDifference && capitalDifference >= 0;
-            const correction = Math.max(invested - Number(realInvested), -deposit);
-            const invest = isAllRight
-              ? deposit + correction
-              : Math.min(deposit * 2, deposit * 2 + correction);
-            const className = realCapital ? (isAllRight ? 'success' : 'noSuccess') : undefined;
+          {dataArray.map(
+            ({ eq, month, year, realInvested, capital, realCapital, lastMonthCapital, lastYearsCapital }) => {
+              const capitalDifference = realCapital && realCapital - capital;
+              const isAllRight = capitalDifference && capitalDifference >= 0;
+              const correction = Math.max(deposit * eq - Number(realInvested), -deposit);
+              const invest = isAllRight
+                ? deposit + correction
+                : Math.min(deposit * 2, deposit * 2 + correction);
+              const className = realCapital ? (isAllRight ? 'positive' : 'negative') : undefined;
 
-            return (
-              <tr key={eq}>
-                <td>{eq}</td>
-                <td>{date}</td>
-                <td>{invested.toLocaleString('ru-RU')} ₽</td>
-                <td>{realInvested ? `${realInvested.toLocaleString('ru-RU')} ₽` : '-'}</td>
-                <td>{taken ? `${taken.toLocaleString('ru-RU')} ₽` : '-'}</td>
-                <td>{(Math.round(capital / 1000) * 1000).toLocaleString('ru-RU')} ₽</td>
-                <td>{realCapital ? `${realCapital.toLocaleString('ru-RU')} ₽` : '-'}</td>
-                <td className={['td-center', className].join(' ')}>{!isAllRight && '-'}</td>
-                <td>{realCapital ? `${invest.toLocaleString('ru-RU')} ₽` : '-'}</td>
-              </tr>
-            );
-          })}
+              const income = realInvested && realCapital && realCapital - realInvested;
+              const incomeInPercent =
+                realInvested && income && Math.round((income / (realInvested * 0.01)) * 100) / 100;
+              const annualYield =
+                incomeInPercent && Math.round((incomeInPercent / eq) * MONTHS.length * 100) / 100;
+
+              const incomeLastMonth = lastMonthCapital && realCapital && realCapital - lastMonthCapital;
+              const incomeInPercentLastMonth =
+                lastMonthCapital &&
+                incomeLastMonth &&
+                Math.round((incomeLastMonth / (lastMonthCapital * 0.01)) * 100) / 100;
+
+              const incomeTTM = lastYearsCapital && realCapital && realCapital - lastYearsCapital;
+              const incomeInPercentTTM =
+                lastYearsCapital &&
+                incomeTTM &&
+                Math.round((incomeTTM / (lastYearsCapital * 0.01)) * 100) / 100;
+
+              return (
+                <tr key={eq}>
+                  <td>{eq}</td>
+                  <td>
+                    {month}&nbsp;{year}
+                  </td>
+                  <td>
+                    {validate(realInvested) ? (
+                      <Fragment>{realInvested?.toLocaleString('ru-RU')}&nbsp;₽</Fragment>
+                    ) : (
+                      '-'
+                    )}
+                  </td>
+                  <td>
+                    {incomeLastMonth ? (
+                      validate(incomeLastMonth) ? (
+                        <Fragment>{incomeLastMonth}&nbsp;₽</Fragment>
+                      ) : (
+                        '-'
+                      )
+                    ) : validate(income) ? (
+                      <Fragment>{income?.toLocaleString('ru-RU')}&nbsp;₽</Fragment>
+                    ) : (
+                      '-'
+                    )}
+                    {incomeInPercentLastMonth ? (
+                      <span
+                        className={Number(incomeInPercentLastMonth) > 0 ? 'positive-text' : 'negative-text'}>
+                        {Number(incomeInPercentLastMonth) > 0 ? '▴' : '▾'}
+                        {Number(incomeInPercentLastMonth) < 0
+                          ? Number(incomeInPercentLastMonth) * -1
+                          : incomeInPercentLastMonth}
+                        %
+                      </span>
+                    ) : (
+                      validate(incomeInPercent) && (
+                        <span className={Number(incomeInPercent) > 0 ? 'positive-text' : 'negative-text'}>
+                          {Number(incomeInPercent) > 0 ? '▴' : '▾'}
+                          {Number(incomeInPercent) < 0 ? Number(incomeInPercent) * -1 : incomeInPercent}%
+                        </span>
+                      )
+                    )}
+                  </td>
+                  <td>
+                    {incomeTTM ? (
+                      validate(incomeTTM) ? (
+                        <Fragment>{incomeTTM}&nbsp;₽</Fragment>
+                      ) : (
+                        '-'
+                      )
+                    ) : validate(income) ? (
+                      <Fragment>{income?.toLocaleString('ru-RU')}&nbsp;₽</Fragment>
+                    ) : (
+                      '-'
+                    )}
+                    {incomeInPercentTTM ? (
+                      <span className={Number(incomeInPercentTTM) > 0 ? 'positive-text' : 'negative-text'}>
+                        {Number(incomeInPercentTTM) > 0 ? '▴' : '▾'}
+                        {Number(incomeInPercentTTM) < 0
+                          ? Number(incomeInPercentTTM) * -1
+                          : incomeInPercentTTM}
+                        %
+                      </span>
+                    ) : (
+                      validate(incomeInPercent) && (
+                        <span className={Number(incomeInPercent) > 0 ? 'positive-text' : 'negative-text'}>
+                          {Number(incomeInPercent) > 0 ? '▴' : '▾'}
+                          {Number(incomeInPercent) < 0 ? Number(incomeInPercent) * -1 : incomeInPercent}%
+                        </span>
+                      )
+                    )}
+                  </td>
+                  <td>
+                    {validate(income) ? <Fragment>{income?.toLocaleString('ru-RU')}&nbsp;₽</Fragment> : '-'}
+                    {validate(incomeInPercent) && (
+                      <span className={Number(incomeInPercent) > 0 ? 'positive-text' : 'negative-text'}>
+                        {Number(incomeInPercent) > 0 ? '▴' : '▾'}
+                        {Number(incomeInPercent) < 0 ? Number(incomeInPercent) * -1 : incomeInPercent}%
+                      </span>
+                    )}
+                  </td>
+                  <td>{validate(annualYield) ? <Fragment>{annualYield}%</Fragment> : '-'}</td>
+                  <td>
+                    {validate(realCapital) ? (
+                      <Fragment>{realCapital?.toLocaleString('ru-RU')}&nbsp;₽</Fragment>
+                    ) : (
+                      '-'
+                    )}
+                  </td>
+                  <td>{(Math.round(capital / 1000) * 1000).toLocaleString('ru-RU')}&nbsp;₽</td>
+                  <td className={['td-center', className].join(' ')}>{!isAllRight && '-'}</td>
+                  <td>
+                    {validate(realCapital) ? (
+                      <Fragment>{invest.toLocaleString('ru-RU')}&nbsp;₽</Fragment>
+                    ) : (
+                      '-'
+                    )}
+                  </td>
+                </tr>
+              );
+            },
+          )}
         </tbody>
         <tfoot>
           <tr>
-            <td colSpan={10}>
+            <td colSpan={12}>
               <span>Прогноз - </span>
-              <span>размер портфеля: {Math.round(totalCapital).toLocaleString('ru-RU')} ₽</span>
+              <span>размер портфеля: {Math.round(totalCapital).toLocaleString('ru-RU')}&nbsp;₽</span>
               <span> | </span>
               <span>пассивный доход: </span>
-              <span>{Math.round(passiveIncome).toLocaleString('ru-RU')} ₽ в год</span>
+              <span>{Math.round(passiveIncome).toLocaleString('ru-RU')}&nbsp;₽ в год</span>
               <span> / </span>
-              <span>{Math.round(passiveIncomeInMonth).toLocaleString('ru-RU')} ₽ в месяц</span>
+              <span>{Math.round(passiveIncomeInMonth).toLocaleString('ru-RU')}&nbsp;₽ в месяц</span>
             </td>
           </tr>
         </tfoot>
@@ -130,3 +241,7 @@ export const App = () => {
     </div>
   );
 };
+
+function validate(value: number | null) {
+  return typeof value === 'number';
+}
