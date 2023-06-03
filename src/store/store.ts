@@ -4,8 +4,8 @@ const initialState = {
   startYear: 2023,
   deposit: 125000,
   period: 10,
-  dividendsYield: 25,
-  inflation: 20,
+  dividendsYield: 35,
+  inflation: 17.737,
 };
 
 const storeSlice = createSlice({

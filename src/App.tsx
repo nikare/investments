@@ -35,19 +35,50 @@ export const App = () => {
       }, 0);
 
       const capitalGrowth = (inflation / MONTHS.length / 100) * (capital + deposit);
-      capital = capitalGrowth + capital + deposit + dividend + prevDividends;
+      capital = Math.round((capitalGrowth + capital + deposit + dividend + prevDividends) / 1000) * 1000;
+
+      const realResult = REAL_RESULTS[eq];
+
+      const totalInvested =
+        realResult &&
+        realResult.invested + newDataArray.reduce((accum, { invested }) => accum + Number(invested), 0);
+
+      const income = totalInvested && realResult.capital - totalInvested;
+      const incomeInPercent = income && Math.round((income / (realResult.invested * 0.01)) * 100) / 100;
+      const annualYield = incomeInPercent && Math.round((incomeInPercent / eq) * MONTHS.length * 100) / 100;
+
+      const incomeLastMonth =
+        realResult && realResult.capital - (REAL_RESULTS[eq - 1]?.capital || 0) - realResult.invested;
+      const incomeLastMonthInPercent =
+        incomeLastMonth && Math.round((incomeLastMonth / (realResult.invested * 0.01)) * 100) / 100;
+
+      const hasPassedYear =
+        (Number(newDataArray.length >= MONTHS.length - 1) || undefined) && incomeLastMonth;
+      const incomeLastYear =
+        hasPassedYear &&
+        newDataArray
+          .slice(MONTHS.length - 1)
+          .reduce((accum, data) => accum + Number(data.incomeLastMonth), 0) + incomeLastMonth;
+      const incomeLastYearInPercent =
+        incomeLastYear && Math.round((incomeLastYear / (realResult.invested * 0.01)) * 100) / 100;
 
       const data: IData = {
         eq: eq,
         month: MONTHS[monthEq],
         year: realYear,
-        realInvested: REAL_RESULTS[eq]?.invested || null,
+        invested: validate(realResult?.invested),
+        totalInvested: validate(totalInvested),
         dividends: dividend,
         prevDividends: prevDividends,
         capital: capital,
-        realCapital: REAL_RESULTS[eq]?.capital || null,
-        lastYearsCapital: newDataArray[eq - MONTHS.length]?.realCapital || null,
-        lastMonthCapital: newDataArray[eq - 1]?.realCapital || null,
+        realCapital: validate(realResult?.capital),
+        income: validate(income),
+        incomeInPercent: validate(incomeInPercent),
+        annualYield: validate(annualYield),
+        incomeLastMonth: validate(incomeLastMonth),
+        incomeLastMonthInPercent: validate(incomeLastMonthInPercent),
+        incomeLastYear: income === incomeLastYear ? null : validate(incomeLastYear),
+        incomeLastYearInPercent: income === incomeLastYear ? null : validate(incomeLastYearInPercent),
       };
       newDataArray.push(data);
     }
@@ -59,67 +90,61 @@ export const App = () => {
     return null;
   }
 
-  const totalCapital = dataArray[dataArray.length - 1].capital;
-  const passiveIncome = (totalCapital / 100) * 12;
-  const passiveIncomeInMonth = passiveIncome / 12;
+  const totalCapital = Math.round(dataArray[dataArray.length - 1].capital);
+  const passiveIncome = Math.round((totalCapital / 100) * 10);
+  const passiveIncomeInMonth = Math.round(passiveIncome / 12);
 
   return (
     <div className="app">
       <h1 className="title">Инвест план</h1>
       <table className="table pure-table">
         <caption>
-          <span>На пенсию в 45 лет!</span>
+          <span>Базовое пополнение </span>
           <a
             className="link"
             href="https://snowball-income.com/public/portfolios/UnvtRAvPaD"
             rel="noreferrer"
             target="_blank">
-            (портфель)
+            портфеля
           </a>
+          <span> - 125 000 ₽ в месяц</span>
         </caption>
         <thead>
           <tr>
             <th>#</th>
             <th>Месяц и год</th>
+            <th>Пополнение</th>
             <th>Вложено</th>
             <th>Прибыль за месяц</th>
             <th>Прибыль за 12 месяцев</th>
             <th>Суммарная прибыль</th>
             <th>Годовых (%)</th>
-            <th>Фактический портфель</th>
             <th>Ожидаемый портфель</th>
+            <th>Фактический портфель</th>
             <th>По плану?</th>
-            <th>След. пополнение</th>
           </tr>
         </thead>
         <tbody>
           {dataArray.map(
-            ({ eq, month, year, realInvested, capital, realCapital, lastMonthCapital, lastYearsCapital }) => {
+            ({
+              eq,
+              month,
+              year,
+              invested,
+              totalInvested,
+              capital,
+              realCapital,
+              income,
+              incomeInPercent,
+              annualYield,
+              incomeLastMonth,
+              incomeLastMonthInPercent,
+              incomeLastYear,
+              incomeLastYearInPercent,
+            }) => {
               const capitalDifference = realCapital && realCapital - capital;
               const isAllRight = capitalDifference && capitalDifference >= 0;
-              const correction = Math.max(deposit * eq - Number(realInvested), -deposit);
-              const invest = isAllRight
-                ? deposit + correction
-                : Math.min(deposit * 2, deposit * 2 + correction);
               const className = realCapital ? (isAllRight ? 'positive' : 'negative') : undefined;
-
-              const income = realInvested && realCapital && realCapital - realInvested;
-              const incomeInPercent =
-                realInvested && income && Math.round((income / (realInvested * 0.01)) * 100) / 100;
-              const annualYield =
-                incomeInPercent && Math.round((incomeInPercent / eq) * MONTHS.length * 100) / 100;
-
-              const incomeLastMonth = lastMonthCapital && realCapital && realCapital - lastMonthCapital;
-              const incomeInPercentLastMonth =
-                lastMonthCapital &&
-                incomeLastMonth &&
-                Math.round((incomeLastMonth / (lastMonthCapital * 0.01)) * 100) / 100;
-
-              const incomeTTM = lastYearsCapital && realCapital && realCapital - lastYearsCapital;
-              const incomeInPercentTTM =
-                lastYearsCapital &&
-                incomeTTM &&
-                Math.round((incomeTTM / (lastYearsCapital * 0.01)) * 100) / 100;
 
               return (
                 <tr key={eq}>
@@ -128,97 +153,72 @@ export const App = () => {
                     {month}&nbsp;{year}
                   </td>
                   <td>
-                    {validate(realInvested) ? (
-                      <Fragment>{realInvested?.toLocaleString('ru-RU')}&nbsp;₽</Fragment>
+                    {isNumber(invested) ? (
+                      <Fragment>{invested?.toLocaleString('ru-RU')}&nbsp;₽</Fragment>
                     ) : (
                       '-'
                     )}
                   </td>
                   <td>
-                    {incomeLastMonth ? (
-                      validate(incomeLastMonth) ? (
-                        <Fragment>{incomeLastMonth}&nbsp;₽</Fragment>
-                      ) : (
-                        '-'
-                      )
-                    ) : validate(income) ? (
-                      <Fragment>{income?.toLocaleString('ru-RU')}&nbsp;₽</Fragment>
+                    {isNumber(totalInvested) ? (
+                      <Fragment>{totalInvested?.toLocaleString('ru-RU')}&nbsp;₽</Fragment>
                     ) : (
                       '-'
                     )}
-                    {incomeInPercentLastMonth ? (
+                  </td>
+                  <td>
+                    {isNumber(incomeLastMonth) ? (
+                      <Fragment>{incomeLastMonth?.toLocaleString('ru-RU')}&nbsp;₽</Fragment>
+                    ) : (
+                      '-'
+                    )}
+                    {isNumber(incomeLastMonthInPercent) && (
                       <span
-                        className={Number(incomeInPercentLastMonth) > 0 ? 'positive-text' : 'negative-text'}>
-                        {Number(incomeInPercentLastMonth) > 0 ? '▴' : '▾'}
-                        {Number(incomeInPercentLastMonth) < 0
-                          ? Number(incomeInPercentLastMonth) * -1
-                          : incomeInPercentLastMonth}
+                        className={Number(incomeLastMonthInPercent) > 0 ? 'positive-text' : 'negative-text'}>
+                        {Number(incomeLastMonthInPercent) > 0 ? '▴' : '▾'}
+                        {Number(incomeLastMonthInPercent) < 0
+                          ? Number(incomeLastMonthInPercent) * -1
+                          : incomeLastMonthInPercent}
                         %
                       </span>
-                    ) : (
-                      validate(incomeInPercent) && (
-                        <span className={Number(incomeInPercent) > 0 ? 'positive-text' : 'negative-text'}>
-                          {Number(incomeInPercent) > 0 ? '▴' : '▾'}
-                          {Number(incomeInPercent) < 0 ? Number(incomeInPercent) * -1 : incomeInPercent}%
-                        </span>
-                      )
                     )}
                   </td>
                   <td>
-                    {incomeTTM ? (
-                      validate(incomeTTM) ? (
-                        <Fragment>{incomeTTM}&nbsp;₽</Fragment>
-                      ) : (
-                        '-'
-                      )
-                    ) : validate(income) ? (
-                      <Fragment>{income?.toLocaleString('ru-RU')}&nbsp;₽</Fragment>
+                    {isNumber(incomeLastYear) ? (
+                      <Fragment>{incomeLastYear?.toLocaleString('ru-RU')}&nbsp;₽</Fragment>
                     ) : (
                       '-'
                     )}
-                    {incomeInPercentTTM ? (
-                      <span className={Number(incomeInPercentTTM) > 0 ? 'positive-text' : 'negative-text'}>
-                        {Number(incomeInPercentTTM) > 0 ? '▴' : '▾'}
-                        {Number(incomeInPercentTTM) < 0
-                          ? Number(incomeInPercentTTM) * -1
-                          : incomeInPercentTTM}
+                    {isNumber(incomeLastYearInPercent) && (
+                      <span
+                        className={Number(incomeLastYearInPercent) > 0 ? 'positive-text' : 'negative-text'}>
+                        {Number(incomeLastYearInPercent) > 0 ? '▴' : '▾'}
+                        {Number(incomeLastYearInPercent) < 0
+                          ? Number(incomeLastYearInPercent) * -1
+                          : incomeLastYearInPercent}
                         %
                       </span>
-                    ) : (
-                      validate(incomeInPercent) && (
-                        <span className={Number(incomeInPercent) > 0 ? 'positive-text' : 'negative-text'}>
-                          {Number(incomeInPercent) > 0 ? '▴' : '▾'}
-                          {Number(incomeInPercent) < 0 ? Number(incomeInPercent) * -1 : incomeInPercent}%
-                        </span>
-                      )
                     )}
                   </td>
                   <td>
-                    {validate(income) ? <Fragment>{income?.toLocaleString('ru-RU')}&nbsp;₽</Fragment> : '-'}
-                    {validate(incomeInPercent) && (
+                    {isNumber(income) ? <Fragment>{income?.toLocaleString('ru-RU')}&nbsp;₽</Fragment> : '-'}
+                    {isNumber(incomeInPercent) && (
                       <span className={Number(incomeInPercent) > 0 ? 'positive-text' : 'negative-text'}>
                         {Number(incomeInPercent) > 0 ? '▴' : '▾'}
                         {Number(incomeInPercent) < 0 ? Number(incomeInPercent) * -1 : incomeInPercent}%
                       </span>
                     )}
                   </td>
-                  <td>{validate(annualYield) ? <Fragment>{annualYield}%</Fragment> : '-'}</td>
+                  <td>{isNumber(annualYield) ? <Fragment>{annualYield}%</Fragment> : '-'}</td>
+                  <td>{capital.toLocaleString('ru-RU')}&nbsp;₽</td>
                   <td>
-                    {validate(realCapital) ? (
+                    {isNumber(realCapital) ? (
                       <Fragment>{realCapital?.toLocaleString('ru-RU')}&nbsp;₽</Fragment>
                     ) : (
                       '-'
                     )}
                   </td>
-                  <td>{(Math.round(capital / 1000) * 1000).toLocaleString('ru-RU')}&nbsp;₽</td>
                   <td className={['td-center', className].join(' ')}>{!isAllRight && '-'}</td>
-                  <td>
-                    {validate(realCapital) ? (
-                      <Fragment>{invest.toLocaleString('ru-RU')}&nbsp;₽</Fragment>
-                    ) : (
-                      '-'
-                    )}
-                  </td>
                 </tr>
               );
             },
@@ -228,12 +228,12 @@ export const App = () => {
           <tr>
             <td colSpan={12}>
               <span>Прогноз - </span>
-              <span>размер портфеля: {Math.round(totalCapital).toLocaleString('ru-RU')}&nbsp;₽</span>
+              <span>размер портфеля: {totalCapital.toLocaleString('ru-RU')}&nbsp;₽</span>
               <span> | </span>
               <span>пассивный доход: </span>
-              <span>{Math.round(passiveIncome).toLocaleString('ru-RU')}&nbsp;₽ в год</span>
+              <span>{passiveIncome.toLocaleString('ru-RU')}&nbsp;₽ в год</span>
               <span> / </span>
-              <span>{Math.round(passiveIncomeInMonth).toLocaleString('ru-RU')}&nbsp;₽ в месяц</span>
+              <span>{passiveIncomeInMonth.toLocaleString('ru-RU')}&nbsp;₽ в месяц</span>
             </td>
           </tr>
         </tfoot>
@@ -242,6 +242,10 @@ export const App = () => {
   );
 };
 
-function validate(value: number | null) {
+function isNumber(value: number | null) {
   return typeof value === 'number';
+}
+
+function validate(value: number | undefined) {
+  return typeof value === 'number' ? value : null;
 }
