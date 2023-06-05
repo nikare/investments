@@ -44,7 +44,7 @@ export const App = () => {
         realResult.invested + newDataArray.reduce((accum, { invested }) => accum + Number(invested), 0);
 
       const income = totalInvested && realResult.capital - totalInvested;
-      const incomeInPercent = income && Math.round((income / (realResult.invested * 0.01)) * 100) / 100;
+      const incomeInPercent = income && Math.round((income / (totalInvested * 0.01)) * 100) / 100;
       const annualYield = incomeInPercent && Math.round((incomeInPercent / eq) * MONTHS.length * 100) / 100;
 
       const incomeLastMonth =
@@ -119,8 +119,8 @@ export const App = () => {
             <th>Прибыль за 12 месяцев</th>
             <th>Суммарная прибыль</th>
             <th>Годовых (%)</th>
-            <th>Ожидаемый портфель</th>
             <th>Фактический портфель</th>
+            <th>Ожидаемый портфель</th>
             <th>По плану?</th>
           </tr>
         </thead>
@@ -210,7 +210,6 @@ export const App = () => {
                     )}
                   </td>
                   <td>{isNumber(annualYield) ? <Fragment>{annualYield}%</Fragment> : '-'}</td>
-                  <td>{capital.toLocaleString('ru-RU')}&nbsp;₽</td>
                   <td>
                     {isNumber(realCapital) ? (
                       <Fragment>{realCapital?.toLocaleString('ru-RU')}&nbsp;₽</Fragment>
@@ -218,6 +217,7 @@ export const App = () => {
                       '-'
                     )}
                   </td>
+                  <td>{capital.toLocaleString('ru-RU')}&nbsp;₽</td>
                   <td className={['td-center', className].join(' ')}>{!isAllRight && '-'}</td>
                 </tr>
               );
