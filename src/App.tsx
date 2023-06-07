@@ -50,7 +50,10 @@ export const App = () => {
       const incomeLastMonth =
         realResult && realResult.capital - (REAL_RESULTS[eq - 1]?.capital || 0) - realResult.invested;
       const incomeLastMonthInPercent =
-        incomeLastMonth && Math.round((incomeLastMonth / (realResult.invested * 0.01)) * 100) / 100;
+        incomeLastMonth &&
+        Math.round(
+          (incomeLastMonth / (((REAL_RESULTS[eq - 1]?.capital || 0) + realResult.invested) * 0.01)) * 100,
+        ) / 100;
 
       const hasPassedYear =
         (Number(newDataArray.length >= MONTHS.length - 1) || undefined) && incomeLastMonth;
