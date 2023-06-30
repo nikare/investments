@@ -221,7 +221,9 @@ export const App = () => {
                     )}
                   </td>
                   <td>{capital.toLocaleString('ru-RU')}&nbsp;₽</td>
-                  <td className={['td-center', className].join(' ')}>{!isAllRight && '-'}</td>
+                  <td className={['td-center', className].join(' ')}>
+                    {typeof isAllRight !== 'boolean' && '-'}
+                  </td>
                 </tr>
               );
             },
