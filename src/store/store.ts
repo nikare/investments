@@ -16,3 +16,11 @@ const storeSlice = createSlice({
 
 export const store = configureStore({ reducer: storeSlice.reducer });
 export type RootState = typeof initialState;
+
+let startSum = 2163337;
+
+for (let i = 0; i < 30; i++) {
+  startSum += startSum * 1.15;
+}
+
+console.log(startSum.toLocaleString('ru-RU'));
