@@ -45,7 +45,6 @@ export const App = () => {
 
       const income = totalInvested && realResult.capital - totalInvested;
       const incomeInPercent = income && Math.round((income / (totalInvested * 0.01)) * 100) / 100;
-      const annualYield = incomeInPercent && Math.round((incomeInPercent / eq) * MONTHS.length * 100) / 100;
 
       const incomeLastMonth =
         realResult && realResult.capital - (REAL_RESULTS[eq - 1]?.capital || 0) - realResult.invested;
@@ -54,16 +53,6 @@ export const App = () => {
         Math.round(
           (incomeLastMonth / (((REAL_RESULTS[eq - 1]?.capital || 0) + realResult.invested) * 0.01)) * 100,
         ) / 100;
-
-      const hasPassedYear =
-        (Number(newDataArray.length >= MONTHS.length - 1) || undefined) && incomeLastMonth;
-      const incomeLastYear =
-        hasPassedYear &&
-        newDataArray
-          .slice(MONTHS.length - 1)
-          .reduce((accum, data) => accum + Number(data.incomeLastMonth), 0) + incomeLastMonth;
-      const incomeLastYearInPercent =
-        incomeLastYear && Math.round((incomeLastYear / (realResult.invested * 0.01)) * 100) / 100;
 
       const data: IData = {
         eq: eq,
@@ -77,11 +66,8 @@ export const App = () => {
         realCapital: validate(realResult?.capital),
         income: validate(income),
         incomeInPercent: validate(incomeInPercent),
-        annualYield: validate(annualYield),
         incomeLastMonth: validate(incomeLastMonth),
         incomeLastMonthInPercent: validate(incomeLastMonthInPercent),
-        incomeLastYear: income === incomeLastYear ? null : validate(incomeLastYear),
-        incomeLastYearInPercent: income === incomeLastYear ? null : validate(incomeLastYearInPercent),
       };
       newDataArray.push(data);
     }
@@ -101,17 +87,7 @@ export const App = () => {
     <div className="app">
       <h1 className="title">Инвест план</h1>
       <table className="table pure-table">
-        <caption>
-          <span>Базовое пополнение </span>
-          <a
-            className="link"
-            href="https://snowball-income.com/public/portfolios/UnvtRAvPaD"
-            rel="noreferrer"
-            target="_blank">
-            портфеля
-          </a>
-          <span> - 125 000 ₽ в месяц</span>
-        </caption>
+        <caption>Минимальное пополнение портфеля - 125 000 ₽ в месяц</caption>
         <thead>
           <tr>
             <th>#</th>
@@ -119,9 +95,7 @@ export const App = () => {
             <th>Пополнение</th>
             <th>Вложено</th>
             <th>Прибыль за месяц</th>
-            <th>Прибыль за 12 месяцев</th>
             <th>Суммарная прибыль</th>
-            <th>Годовых (%)</th>
             <th>Фактический портфель</th>
             <th>Ожидаемый портфель</th>
             <th>По плану?</th>
@@ -139,11 +113,8 @@ export const App = () => {
               realCapital,
               income,
               incomeInPercent,
-              annualYield,
               incomeLastMonth,
               incomeLastMonthInPercent,
-              incomeLastYear,
-              incomeLastYearInPercent,
             }) => {
               const capitalDifference = realCapital && realCapital - capital;
               const isAllRight = capitalDifference && capitalDifference >= 0;
@@ -187,23 +158,6 @@ export const App = () => {
                     )}
                   </td>
                   <td>
-                    {isNumber(incomeLastYear) ? (
-                      <Fragment>{incomeLastYear?.toLocaleString('ru-RU')}&nbsp;₽</Fragment>
-                    ) : (
-                      '-'
-                    )}
-                    {isNumber(incomeLastYearInPercent) && (
-                      <span
-                        className={Number(incomeLastYearInPercent) > 0 ? 'positive-text' : 'negative-text'}>
-                        {Number(incomeLastYearInPercent) > 0 ? '▴' : '▾'}
-                        {Number(incomeLastYearInPercent) < 0
-                          ? Number(incomeLastYearInPercent) * -1
-                          : incomeLastYearInPercent}
-                        %
-                      </span>
-                    )}
-                  </td>
-                  <td>
                     {isNumber(income) ? <Fragment>{income?.toLocaleString('ru-RU')}&nbsp;₽</Fragment> : '-'}
                     {isNumber(incomeInPercent) && (
                       <span className={Number(incomeInPercent) > 0 ? 'positive-text' : 'negative-text'}>
@@ -212,7 +166,6 @@ export const App = () => {
                       </span>
                     )}
                   </td>
-                  <td>{isNumber(annualYield) ? <Fragment>{annualYield}%</Fragment> : '-'}</td>
                   <td>
                     {isNumber(realCapital) ? (
                       <Fragment>{realCapital?.toLocaleString('ru-RU')}&nbsp;₽</Fragment>
@@ -232,7 +185,7 @@ export const App = () => {
         <tfoot>
           <tr>
             <td colSpan={12}>
-              <span>Прогноз - </span>
+              <span>Цель - </span>
               <span>размер портфеля: {totalCapital.toLocaleString('ru-RU')}&nbsp;₽</span>
               <span> | </span>
               <span>пассивный доход: </span>

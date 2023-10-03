@@ -10,9 +10,6 @@ export interface IData {
   realCapital: number | null;
   income: number | null;
   incomeInPercent: number | null;
-  annualYield: number | null;
   incomeLastMonth: number | null;
   incomeLastMonthInPercent: number | null;
-  incomeLastYear: number | null;
-  incomeLastYearInPercent: number | null;
 }
