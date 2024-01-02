@@ -1,20 +1,30 @@
 import { useEffect, useState, Fragment } from 'react';
-import { useStore } from 'hooks';
 
-import { MONTHS, REAL_RESULTS } from './constants';
+import { DEPOSIT, DIVIDENDS_YIELD, INFLATION, MONTHS, PERIOD, REAL_RESULTS, START_YEAR } from './constants';
 import { IData } from './interfaces';
+import { useGetStocksQuery, CACHE_TIME } from 'store';
 
 export const App = () => {
   const [dataArray, setDataArray] = useState<IData[]>([]);
-  const { period, deposit, startYear, dividendsYield, inflation } = useStore();
+  const { data: currentCapital, refetch } = useGetStocksQuery();
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      refetch();
+    }, CACHE_TIME * 1000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [refetch]);
 
   useEffect(() => {
     const newDataArray: IData[] = [];
-    let realYear = startYear;
-    let yearEq = startYear;
+    let realYear = START_YEAR;
+    let yearEq = START_YEAR;
     let capital = 0;
 
-    for (let i = 0; i < period * MONTHS.length; i++) {
+    for (let i = 0; i < PERIOD * MONTHS.length; i++) {
       const monthEq = i % MONTHS.length;
       const eq = i + 1;
 
@@ -26,44 +36,48 @@ export const App = () => {
         yearEq += 1;
       }
 
-      const dividend = (deposit / 100) * dividendsYield * (yearEq - startYear);
+      const dividend = (DEPOSIT / 100) * DIVIDENDS_YIELD * (yearEq - START_YEAR);
       const prevDividends = newDataArray.reduce((accum, data) => {
         return (
           accum +
-          (eq % MONTHS.length === data.eq % MONTHS.length ? (data.dividends / 100) * dividendsYield : 0)
+          (eq % MONTHS.length === data.eq % MONTHS.length ? (data.dividends / 100) * DIVIDENDS_YIELD : 0)
         );
       }, 0);
 
-      const capitalGrowth = (inflation / MONTHS.length / 100) * (capital + deposit);
-      capital = Math.round((capitalGrowth + capital + deposit + dividend + prevDividends) / 1000) * 1000;
+      const capitalGrowth = (INFLATION / MONTHS.length / 100) * (capital + DEPOSIT);
+      capital = Math.round((capitalGrowth + capital + DEPOSIT + dividend + prevDividends) / 1000) * 1000;
 
-      const realResult = REAL_RESULTS[eq];
+      const realInvested = REAL_RESULTS[eq]?.invested;
+      const realCapital =
+        REAL_RESULTS[eq]?.capitalOnLastDay === 0 ? currentCapital : REAL_RESULTS[eq]?.capitalOnLastDay;
 
       const totalInvested =
-        realResult &&
-        realResult.invested + newDataArray.reduce((accum, { invested }) => accum + Number(invested), 0);
+        realInvested &&
+        realInvested + newDataArray.reduce((accum, { invested }) => accum + Number(invested), 0);
 
-      const income = totalInvested && realResult.capital - totalInvested;
+      const income = realCapital && totalInvested && realCapital - totalInvested;
       const incomeInPercent = income && Math.round((income / (totalInvested * 0.01)) * 100) / 100;
 
       const incomeLastMonth =
-        realResult && realResult.capital - (REAL_RESULTS[eq - 1]?.capital || 0) - realResult.invested;
+        realCapital &&
+        realInvested &&
+        realCapital - (REAL_RESULTS[eq - 1]?.capitalOnLastDay || 0) - realInvested;
       const incomeLastMonthInPercent =
         incomeLastMonth &&
         Math.round(
-          (incomeLastMonth / (((REAL_RESULTS[eq - 1]?.capital || 0) + realResult.invested) * 0.01)) * 100,
+          (incomeLastMonth / (((REAL_RESULTS[eq - 1]?.capitalOnLastDay || 0) + realInvested) * 0.01)) * 100,
         ) / 100;
 
       const data: IData = {
         eq: eq,
         month: MONTHS[monthEq],
         year: realYear,
-        invested: validate(realResult?.invested),
+        invested: validate(realInvested),
         totalInvested: validate(totalInvested),
         dividends: dividend,
         prevDividends: prevDividends,
         capital: capital,
-        realCapital: validate(realResult?.capital),
+        realCapital: validate(realCapital),
         income: validate(income),
         incomeInPercent: validate(incomeInPercent),
         incomeLastMonth: validate(incomeLastMonth),
@@ -73,9 +87,9 @@ export const App = () => {
     }
 
     setDataArray(newDataArray);
-  }, [deposit, dividendsYield, inflation, period, startYear]);
+  }, [currentCapital]);
 
-  if (!dataArray.length) {
+  if (!dataArray.length || !currentCapital) {
     return null;
   }
 
@@ -85,7 +99,7 @@ export const App = () => {
 
   return (
     <div className="app">
-      <h1 className="title">Инвест план</h1>
+      <h1 className="title">Инвест план на 10 лет</h1>
       <table className="table pure-table">
         <caption>Минимальное пополнение портфеля - 125 000 ₽ в месяц</caption>
         <thead>
