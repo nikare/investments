@@ -52,15 +52,15 @@ export const App = () => {
         REAL_RESULTS[eq]?.capitalOnLastDay === 0 ? currentCapital : REAL_RESULTS[eq]?.capitalOnLastDay;
 
       const totalInvested =
-        realInvested &&
+        typeof realInvested === 'number' &&
         realInvested + newDataArray.reduce((accum, { invested }) => accum + Number(invested), 0);
 
       const income = realCapital && totalInvested && realCapital - totalInvested;
       const incomeInPercent = income && Math.round((income / (totalInvested * 0.01)) * 100) / 100;
 
       const incomeLastMonth =
-        realCapital &&
-        realInvested &&
+        typeof realCapital === 'number' &&
+        typeof realInvested === 'number' &&
         realCapital - (REAL_RESULTS[eq - 1]?.capitalOnLastDay || 0) - realInvested;
       const incomeLastMonthInPercent =
         incomeLastMonth &&
@@ -218,6 +218,6 @@ function isNumber(value: number | null) {
   return typeof value === 'number';
 }
 
-function validate(value: number | undefined) {
+function validate(value: number | undefined | false) {
   return typeof value === 'number' ? value : null;
 }
