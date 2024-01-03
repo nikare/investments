@@ -2,7 +2,7 @@ export const START_YEAR = 2023;
 export const DEPOSIT = 125000;
 export const PERIOD = 10;
 export const DIVIDENDS_YIELD = 35;
-export const INFLATION = 0.737;
+export const INFLATION = 17.737;
 
 export const MONTHS = [
   'Май',
@@ -40,5 +40,5 @@ export const REAL_RESULTS: {
   7: { invested: 249400, capitalOnLastDay: 1609609.78 }, // 30 Ноября 2023
   8: { invested: 700000, capitalOnLastDay: 2419696.98 }, // 31 Декабря 2023
 
-  9: { invested: 0, capitalOnLastDay: 2429003.93 }, // 31 Января 2024
+  9: { invested: 0, capitalOnLastDay: 0 }, // 31 Января 2024
 };

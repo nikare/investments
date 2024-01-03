@@ -33,7 +33,7 @@ const axiosBaseQuery =
     }
   };
 
-export const CACHE_TIME = 30;
+export const CACHE_TIME = 15;
 
 export const api = createApi({
   reducerPath: 'baseApi',
