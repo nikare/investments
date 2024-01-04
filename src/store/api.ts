@@ -51,12 +51,14 @@ export const api = createApi({
               } else {
                 const stockResponse = (
                   await baseQuery({
-                    url: `engines/stock/markets/shares/boards/TQBR/securities/${ticker}.json?iss.meta=off&iss.only=marketdata&marketdata.columns=LAST`,
+                    url: `engines/stock/markets/shares/boards/TQBR/securities/${ticker}.json?iss.meta=off&iss.only=marketdata,securities&marketdata.columns=LAST&securities.columns=PREVPRICE`,
                     method: 'GET',
                   })
-                ).data as { marketdata: { data: [[number]] } };
+                ).data as { marketdata: { data: [[number]] }; securities: { data: [[number]] } };
 
-                return stockResponse.marketdata.data[0][0] * quantity;
+                const { marketdata, securities } = stockResponse;
+                const price = marketdata.data[0][0] || securities.data[0][0];
+                return price * quantity;
               }
             }),
           );
