@@ -20,12 +20,12 @@ export const MONTHS = [
 ];
 
 export const BALANCES = [
-  { ticker: 'RUB', quantity: 799.03 },
   { ticker: 'TATNP', quantity: 1445 },
   { ticker: 'LKOH', quantity: 84 },
   { ticker: 'SIBN', quantity: 553 },
-  { ticker: 'CHMF', quantity: 208 },
+  { ticker: 'CHMF', quantity: 234 },
   { ticker: 'SVCB', quantity: 5000 },
+  { ticker: 'RUB', quantity: 508.85 },
 ] as const;
 
 export const REAL_RESULTS: {

@@ -99,7 +99,7 @@ export const App = () => {
 
   return (
     <div className="app">
-      <h1 className="title">Инвест план на 10 лет</h1>
+      <h1 className="title">Инвест план</h1>
       <table className="table pure-table">
         <caption>Минимальное пополнение портфеля - 125 000 ₽ в месяц</caption>
         <thead>
