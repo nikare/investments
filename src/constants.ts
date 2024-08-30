@@ -32,6 +32,19 @@ export const BALANCES = [
   { ticker: 'RUB', quantity: 384.08 },
 ] as const;
 
+export const ALT_BALANCES = [
+  { ticker: 'TATNP', quantity: 2225 },
+  { ticker: 'LKOH', quantity: 61 },
+  { ticker: 'CHMF', quantity: 1 },
+  { ticker: 'SIBN', quantity: 349 },
+  { ticker: 'SBERP', quantity: 590 },
+  { ticker: 'SNGSP', quantity: 5800 },
+  { ticker: 'PLZL', quantity: 1 },
+  { ticker: 'NVTK', quantity: 1 },
+  { ticker: 'SVCB', quantity: 5000 },
+  { ticker: 'RUB', quantity: 384.08 },
+];
+
 export const REAL_RESULTS: {
   [key: number]: { invested: number; capitalOnLastDay: number } | undefined;
 } = {

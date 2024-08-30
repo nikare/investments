@@ -1,6 +1,6 @@
 import { BaseQueryFn, createApi } from '@reduxjs/toolkit/query/react';
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
-import { BALANCES } from '../constants';
+import { ALT_BALANCES, BALANCES } from '../constants';
 
 type BaseQuery = BaseQueryFn<{
   params?: AxiosRequestConfig['params'];
@@ -44,26 +44,50 @@ export const api = createApi({
     return {
       getStocks: build.query<number, void>({
         async queryFn(_arg, _api, _extraOptions, baseQuery) {
-          const balances = await Promise.all(
-            BALANCES.map(async ({ ticker, quantity }) => {
-              if (ticker === 'RUB') {
-                return quantity;
-              } else {
-                const stockResponse = (
-                  await baseQuery({
-                    url: `engines/stock/markets/shares/boards/TQBR/securities/${ticker}.json?iss.meta=off&iss.only=marketdata,securities&marketdata.columns=LAST&securities.columns=PREVPRICE`,
-                    method: 'GET',
-                  })
-                ).data as { marketdata: { data: [[number]] }; securities: { data: [[number]] } };
+          const balances = (
+            await Promise.all(
+              BALANCES.map(async ({ ticker, quantity }) => {
+                if (ticker === 'RUB') {
+                  return quantity;
+                } else {
+                  const stockResponse = (
+                    await baseQuery({
+                      url: `engines/stock/markets/shares/boards/TQBR/securities/${ticker}.json?iss.meta=off&iss.only=marketdata,securities&marketdata.columns=LAST&securities.columns=PREVPRICE`,
+                      method: 'GET',
+                    })
+                  ).data as { marketdata: { data: [[number]] }; securities: { data: [[number]] } };
 
-                const { marketdata, securities } = stockResponse;
-                const price = marketdata.data[0][0] || securities.data[0][0];
-                return price * quantity;
-              }
-            }),
-          );
+                  const { marketdata, securities } = stockResponse;
+                  const price = marketdata.data[0][0] || securities.data[0][0];
+                  return price * quantity;
+                }
+              }),
+            )
+          ).reduce((accum, value) => accum + value, 0);
 
-          return { data: balances.reduce((accum, value) => accum + value, 0) };
+          const altBalances = (
+            await Promise.all(
+              ALT_BALANCES.map(async ({ ticker, quantity }) => {
+                if (ticker === 'RUB') {
+                  return quantity;
+                } else {
+                  const stockResponse = (
+                    await baseQuery({
+                      url: `engines/stock/markets/shares/boards/TQBR/securities/${ticker}.json?iss.meta=off&iss.only=marketdata,securities&marketdata.columns=LAST&securities.columns=PREVPRICE`,
+                      method: 'GET',
+                    })
+                  ).data as { marketdata: { data: [[number]] }; securities: { data: [[number]] } };
+
+                  const { marketdata, securities } = stockResponse;
+                  const price = marketdata.data[0][0] || securities.data[0][0];
+                  return price * quantity;
+                }
+              }),
+            )
+          ).reduce((accum, value) => accum + value, 0);
+
+          console.log(`${(Math.round((balances - altBalances) * 100) / 100).toLocaleString('ru-RU')} ₽`);
+          return { data: balances };
         },
         keepUnusedDataFor: CACHE_TIME,
       }),
