@@ -1,6 +1,6 @@
 import { BaseQueryFn, createApi } from '@reduxjs/toolkit/query/react';
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
-import { ALT_BALANCES, BALANCES } from '../constants';
+import { DEBT, BALANCES } from '../constants';
 
 type BaseQuery = BaseQueryFn<{
   params?: AxiosRequestConfig['params'];
@@ -67,7 +67,7 @@ export const api = createApi({
 
           const altBalances = (
             await Promise.all(
-              ALT_BALANCES.map(async ({ ticker, quantity }) => {
+              DEBT.map(async ({ ticker, quantity }) => {
                 if (ticker === 'RUB') {
                   return quantity;
                 } else {

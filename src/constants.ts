@@ -32,16 +32,14 @@ export const BALANCES = [
   { ticker: 'RUB', quantity: 384.08 },
 ] as const;
 
-export const ALT_BALANCES = [
-  { ticker: 'TATNP', quantity: 2225 },
-  { ticker: 'LKOH', quantity: 61 },
-  { ticker: 'CHMF', quantity: 1 },
-  { ticker: 'SIBN', quantity: 349 },
-  { ticker: 'SBERP', quantity: 590 },
-  { ticker: 'SNGSP', quantity: 5800 },
-  { ticker: 'PLZL', quantity: 1 },
-  { ticker: 'NVTK', quantity: 1 },
-  { ticker: 'SVCB', quantity: 5000 },
+export const DEBT = [
+  { ticker: 'TATNP', quantity: 108 },
+  { ticker: 'LKOH', quantity: 23 },
+  { ticker: 'CHMF', quantity: 336 },
+  { ticker: 'SIBN', quantity: 204 },
+  { ticker: 'SBERP', quantity: 700 },
+  { ticker: 'PLZL', quantity: 21 },
+  { ticker: 'NVTK', quantity: 185 },
   { ticker: 'RUB', quantity: 384.08 },
 ];
 
@@ -63,6 +61,6 @@ export const REAL_RESULTS: {
   13: { invested: 250000, capitalOnLastDay: 3542805.21 }, // 31 мая 2024
   14: { invested: 250000, capitalOnLastDay: 3793450.86 }, // 30 июня 2024
   15: { invested: 250000, capitalOnLastDay: 3772457.9 }, // 31 июля 2024
-  16: { invested: 250000, capitalOnLastDay: 3781124.93 }, // 31 августа 2024
+  16: { invested: 250000, capitalOnLastDay: 3780900.68 }, // 31 августа 2024
   17: { invested: 0, capitalOnLastDay: 0 }, // 30 сентября 2024
 };
