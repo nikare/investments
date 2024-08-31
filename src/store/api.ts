@@ -65,7 +65,7 @@ export const api = createApi({
             )
           ).reduce((accum, value) => accum + value, 0);
 
-          const altBalances = (
+          const debtBalances = (
             await Promise.all(
               DEBT.map(async ({ ticker, quantity }) => {
                 if (ticker === 'RUB') {
@@ -85,8 +85,7 @@ export const api = createApi({
               }),
             )
           ).reduce((accum, value) => accum + value, 0);
-
-          console.log(`${(Math.round((balances - altBalances) * 100) / 100).toLocaleString('ru-RU')} ₽`);
+          console.log(`${(Math.round(debtBalances * 100) / 100).toLocaleString('ru-RU')} ₽`);
           return { data: balances };
         },
         keepUnusedDataFor: CACHE_TIME,
