@@ -22,14 +22,14 @@ export const MONTHS = [
 export const BALANCES = [
   { ticker: 'TATNP', quantity: 2333 },
   { ticker: 'LKOH', quantity: 84 },
+  { ticker: 'SIBN', quantity: 750 },
   { ticker: 'CHMF', quantity: 337 },
-  { ticker: 'SIBN', quantity: 553 },
+  { ticker: 'PLZL', quantity: 32 },
   { ticker: 'SBERP', quantity: 1290 },
   { ticker: 'SNGSP', quantity: 5800 },
-  { ticker: 'PLZL', quantity: 22 },
   { ticker: 'NVTK', quantity: 186 },
   { ticker: 'SVCB', quantity: 5000 },
-  { ticker: 'RUB', quantity: 384.08 },
+  { ticker: 'RUB', quantity: 336.4 },
 ] as const;
 
 export const DEBT = [
@@ -62,5 +62,5 @@ export const REAL_RESULTS: {
   14: { invested: 250000, capitalOnLastDay: 3793450.86 }, // 30 июня 2024
   15: { invested: 250000, capitalOnLastDay: 3772457.9 }, // 31 июля 2024
   16: { invested: 250000, capitalOnLastDay: 3780900.68 }, // 31 августа 2024
-  17: { invested: 0, capitalOnLastDay: 0 }, // 30 сентября 2024
+  17: { invested: 250000, capitalOnLastDay: 0 }, // 30 сентября 2024
 };
