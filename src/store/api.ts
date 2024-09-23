@@ -1,6 +1,6 @@
 import { BaseQueryFn, createApi } from '@reduxjs/toolkit/query/react';
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
-import { DEBT, BALANCES } from '../constants';
+import { BALANCES } from '../constants';
 
 type BaseQuery = BaseQueryFn<{
   params?: AxiosRequestConfig['params'];
@@ -65,27 +65,6 @@ export const api = createApi({
             )
           ).reduce((accum, value) => accum + value, 0);
 
-          const debtBalances = (
-            await Promise.all(
-              DEBT.map(async ({ ticker, quantity }) => {
-                if (ticker === 'RUB') {
-                  return quantity;
-                } else {
-                  const stockResponse = (
-                    await baseQuery({
-                      url: `engines/stock/markets/shares/boards/TQBR/securities/${ticker}.json?iss.meta=off&iss.only=marketdata,securities&marketdata.columns=LAST&securities.columns=PREVPRICE`,
-                      method: 'GET',
-                    })
-                  ).data as { marketdata: { data: [[number]] }; securities: { data: [[number]] } };
-
-                  const { marketdata, securities } = stockResponse;
-                  const price = marketdata.data[0][0] || securities.data[0][0];
-                  return price * quantity;
-                }
-              }),
-            )
-          ).reduce((accum, value) => accum + value, 0);
-          console.log(`${(Math.round(debtBalances * 100) / 100).toLocaleString('ru-RU')} ₽`);
           return { data: balances };
         },
         keepUnusedDataFor: CACHE_TIME,

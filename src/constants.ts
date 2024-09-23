@@ -22,26 +22,15 @@ export const MONTHS = [
 export const BALANCES = [
   { ticker: 'TATNP', quantity: 2333 },
   { ticker: 'LKOH', quantity: 84 },
-  { ticker: 'SIBN', quantity: 750 },
+  { ticker: 'SIBN', quantity: 762 },
   { ticker: 'CHMF', quantity: 337 },
   { ticker: 'PLZL', quantity: 32 },
   { ticker: 'SBERP', quantity: 1290 },
   { ticker: 'SNGSP', quantity: 5800 },
   { ticker: 'NVTK', quantity: 186 },
   { ticker: 'SVCB', quantity: 5000 },
-  { ticker: 'RUB', quantity: 336.4 },
+  { ticker: 'RUB', quantity: 686.22 },
 ] as const;
-
-export const DEBT = [
-  { ticker: 'TATNP', quantity: 108 },
-  { ticker: 'LKOH', quantity: 23 },
-  { ticker: 'CHMF', quantity: 336 },
-  { ticker: 'SIBN', quantity: 204 },
-  { ticker: 'SBERP', quantity: 700 },
-  { ticker: 'PLZL', quantity: 21 },
-  { ticker: 'NVTK', quantity: 185 },
-  { ticker: 'RUB', quantity: 384.08 },
-];
 
 export const REAL_RESULTS: {
   [key: number]: { invested: number; capitalOnLastDay: number } | undefined;
