@@ -30,7 +30,7 @@ export const BALANCES = [
   { ticker: 'NVTK', quantity: 307 },
   { ticker: 'PHOR', quantity: 49 },
   { ticker: 'SVCB', quantity: 5000 },
-  { ticker: 'RUB', quantity: 3707.57 },
+  { ticker: 'RUB', quantity: 253707.57 },
 ] as const;
 
 export const REAL_RESULTS: {
@@ -56,4 +56,44 @@ export const REAL_RESULTS: {
   18: { invested: 250000, capitalOnLastDay: 4282603.47 }, // 31 октября 2024
   19: { invested: 250000, capitalOnLastDay: 4584487.87 }, // 30 ноября 2024
   20: { invested: 0, capitalOnLastDay: 0 }, // 31 декабря 2024
+  // 21: { invested: 0, capitalOnLastDay: 0 }, // 31 Января 2025
+  // 22: { invested: 0, capitalOnLastDay: 0 }, // 28 Февраля 2025
+  // 23: { invested: 0, capitalOnLastDay: 0 }, // 31 Марта 2025
+  // 24: { invested: 0, capitalOnLastDay: 0 }, // 30 Апреля 2025
+  // 25: { invested: 0, capitalOnLastDay: 0 }, // 31 мая 2025
+  // 26: { invested: 0, capitalOnLastDay: 0 }, // 30 июня 2025
+  // 27: { invested: 0, capitalOnLastDay: 0 }, // 31 июля 2025
+  // 28: { invested: 0, capitalOnLastDay: 0 }, // 31 августа 2025
+  // 29: { invested: 0, capitalOnLastDay: 0 }, // 30 сентября 2025
+  // 30: { invested: 0, capitalOnLastDay: 0 }, // 31 октября 2025
+  // 31: { invested: 0, capitalOnLastDay: 0 }, // 30 ноября 2025
+  // 32: { invested: 0, capitalOnLastDay: 0 }, // 31 декабря 2025
+  // 33: { invested: 0, capitalOnLastDay: 0 }, // 31 Января 2026
+  // 34: { invested: 0, capitalOnLastDay: 0 }, // 28 Февраля 2026
+  // 35: { invested: 0, capitalOnLastDay: 0 }, // 31 Марта 2026
+  // 36: { invested: 0, capitalOnLastDay: 0 }, // 30 Апреля 2026
+  // 37: { invested: 0, capitalOnLastDay: 0 }, // 31 мая 2026
+  // 38: { invested: 0, capitalOnLastDay: 0 }, // 30 июня 2026
+  // 39: { invested: 0, capitalOnLastDay: 0 }, // 31 июля 2026
+  // 40: { invested: 0, capitalOnLastDay: 0 }, // 31 августа 2026
+  // 41: { invested: 0, capitalOnLastDay: 0 }, // 30 сентября 2026
+  // 42: { invested: 0, capitalOnLastDay: 0 }, // 31 октября 2026
+  // 43: { invested: 0, capitalOnLastDay: 0 }, // 30 ноября 2026
+  // 44: { invested: 0, capitalOnLastDay: 0 }, // 31 декабря 2026
+  // 45: { invested: 0, capitalOnLastDay: 0 }, // 31 Января 2027
+  // 46: { invested: 0, capitalOnLastDay: 0 }, // 28 Февраля 2027
+  // 47: { invested: 0, capitalOnLastDay: 0 }, // 31 Марта 2027
+  // 48: { invested: 0, capitalOnLastDay: 0 }, // 30 Апреля 2027
+  // 49: { invested: 0, capitalOnLastDay: 0 }, // 31 мая 2027
+  // 50: { invested: 0, capitalOnLastDay: 0 }, // 30 июня 2027
+  // 51: { invested: 0, capitalOnLastDay: 0 }, // 31 июля 2027
+  // 52: { invested: 0, capitalOnLastDay: 0 }, // 31 августа 2027
+  // 53: { invested: 0, capitalOnLastDay: 0 }, // 30 сентября 2027
+  // 54: { invested: 0, capitalOnLastDay: 0 }, // 31 октября 2027
+  // 55: { invested: 0, capitalOnLastDay: 0 }, // 30 ноября 2027
+  // 56: { invested: 0, capitalOnLastDay: 0 }, // 31 декабря 2027
+  // 57: { invested: 0, capitalOnLastDay: 0 }, // 31 Января 2028
+  // 58: { invested: 0, capitalOnLastDay: 0 }, // 29 Февраля 2028
+  // 59: { invested: 0, capitalOnLastDay: 0 }, // 31 Марта 2028
+  // 60: { invested: 0, capitalOnLastDay: 0 }, // 30 Апреля 2028
 };
