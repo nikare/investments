@@ -29,8 +29,9 @@ export const BALANCES = [
   { ticker: 'SBERP', quantity: 1290 },
   { ticker: 'NVTK', quantity: 307 },
   { ticker: 'PHOR', quantity: 49 },
+  { ticker: 'FLOT', quantity: 2980 },
   { ticker: 'SVCB', quantity: 5000 },
-  { ticker: 'RUB', quantity: 253707.57 },
+  { ticker: 'RUB', quantity: 641.78 },
 ] as const;
 
 export const REAL_RESULTS: {
