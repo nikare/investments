@@ -36,13 +36,13 @@ export const BALANCES: { ticker: string; quantity: number }[] = [
 
 export const DEBT: { ticker: string; quantity: number }[] = [
   { ticker: 'TATNP', quantity: 96 },
+  { ticker: 'RUB', quantity: 75476.97 },
   { ticker: 'SIBN', quantity: 204 },
   { ticker: 'NVTK', quantity: 215 },
   { ticker: 'LKOH', quantity: 32 },
   { ticker: 'SBERP', quantity: 990 },
   { ticker: 'PLZL', quantity: 21 },
   { ticker: 'CHMF', quantity: 336 },
-  { ticker: 'RUB', quantity: 75476.97 },
 ];
 
 export const REAL_RESULTS: {

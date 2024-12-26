@@ -70,13 +70,13 @@ export const api = createApi({
         keepUnusedDataFor: CACHE_TIME,
       }),
 
-      getDebt: build.query<number, void>({
+      getDebt: build.query<void, void>({
         async queryFn(_arg, _api, _extraOptions, baseQuery) {
-          const balances = (
+          const stocks = (
             await Promise.all(
               DEBT.map(async ({ ticker, quantity }) => {
                 if (ticker === 'RUB') {
-                  return quantity;
+                  return { ticker, price: 1, value: quantity };
                 } else {
                   const stockResponse = (
                     await baseQuery({
@@ -87,13 +87,29 @@ export const api = createApi({
 
                   const { marketdata, securities } = stockResponse;
                   const price = marketdata.data[0][0] || securities.data[0][0];
-                  return price * quantity;
+
+                  return { ticker, quantity, value: price * quantity };
                 }
               }),
             )
-          ).reduce((accum, value) => accum + value, 0);
+          )
+            .sort((a, b) => a.value + b.value)
+            .sort((a, b) => (a.ticker === 'RUB' ? -1 : 0));
 
-          return { data: balances };
+          const amount = stocks.reduce((accum, { value }) => accum + value, 0);
+
+          stocks.forEach(({ ticker, quantity, value }, index) => {
+            if (ticker === 'RUB') {
+              console.log(`${index + 1}. ${ticker} - ${value.toLocaleString('ru-RU')} ₽`);
+            } else {
+              console.log(`${index + 1}. ${ticker} - ${quantity} шт (${value.toLocaleString('ru-RU')} ₽)`);
+            }
+          });
+
+          console.log(`Итого: ${amount.toLocaleString('ru-RU')} ₽`);
+          console.log('');
+
+          return { data: undefined };
         },
         keepUnusedDataFor: CACHE_TIME,
       }),

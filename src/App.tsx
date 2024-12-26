@@ -4,26 +4,23 @@ import { DEPOSIT, DIVIDENDS_YIELD, INFLATION, MONTHS, PERIOD, REAL_RESULTS, STAR
 import { IData } from './interfaces';
 import { useGetStocksQuery, CACHE_TIME, useGetDebtQuery } from 'store';
 
+export const IS_DEV = process.env.NODE_ENV === 'development';
+
 export const App = () => {
   const [dataArray, setDataArray] = useState<IData[]>([]);
   const { data: currentCapital, refetch: refetchCurrentCapital } = useGetStocksQuery();
-  const { data: debt, refetch: refetchDebt } = useGetDebtQuery();
+  const { refetch: refetchDebt } = useGetDebtQuery();
 
   useEffect(() => {
     const intervalId = setInterval(() => {
       refetchCurrentCapital();
-      refetchDebt();
+      if (IS_DEV) refetchDebt();
     }, CACHE_TIME * 1000);
 
     return () => {
       clearInterval(intervalId);
     };
   }, [refetchCurrentCapital, refetchDebt]);
-
-  useEffect(() => {
-    if (!debt) return;
-    console.log(debt.toLocaleString('ru-RU') + ' ₽');
-  }, [debt]);
 
   useEffect(() => {
     const newDataArray: IData[] = [];
