@@ -2,21 +2,28 @@ import { useEffect, useState, Fragment } from 'react';
 
 import { DEPOSIT, DIVIDENDS_YIELD, INFLATION, MONTHS, PERIOD, REAL_RESULTS, START_YEAR } from './constants';
 import { IData } from './interfaces';
-import { useGetStocksQuery, CACHE_TIME } from 'store';
+import { useGetStocksQuery, CACHE_TIME, useGetDebtQuery } from 'store';
 
 export const App = () => {
   const [dataArray, setDataArray] = useState<IData[]>([]);
-  const { data: currentCapital, refetch } = useGetStocksQuery();
+  const { data: currentCapital, refetch: refetchCurrentCapital } = useGetStocksQuery();
+  const { data: debt, refetch: refetchDebt } = useGetDebtQuery();
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      refetch();
+      refetchCurrentCapital();
+      refetchDebt();
     }, CACHE_TIME * 1000);
 
     return () => {
       clearInterval(intervalId);
     };
-  }, [refetch]);
+  }, [refetchCurrentCapital, refetchDebt]);
+
+  useEffect(() => {
+    if (!debt) return;
+    console.log(debt.toLocaleString('ru-RU') + ' ₽');
+  }, [debt]);
 
   useEffect(() => {
     const newDataArray: IData[] = [];
