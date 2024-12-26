@@ -117,4 +117,4 @@ export const api = createApi({
   },
 });
 
-export const { useGetStocksQuery, useGetDebtQuery } = api;
+export const { useGetStocksQuery, useLazyGetDebtQuery } = api;
