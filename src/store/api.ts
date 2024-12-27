@@ -75,26 +75,20 @@ export const api = createApi({
           const stocks = (
             await Promise.all(
               DEBT.map(async ({ ticker, quantity }) => {
-                if (ticker === 'RUB') {
-                  return { ticker, price: 1, value: quantity };
-                } else {
-                  const stockResponse = (
-                    await baseQuery({
-                      url: `engines/stock/markets/shares/boards/TQBR/securities/${ticker}.json?iss.meta=off&iss.only=marketdata,securities&marketdata.columns=LAST&securities.columns=PREVPRICE`,
-                      method: 'GET',
-                    })
-                  ).data as { marketdata: { data: [[number]] }; securities: { data: [[number]] } };
+                const stockResponse = (
+                  await baseQuery({
+                    url: `engines/stock/markets/shares/boards/TQBR/securities/${ticker}.json?iss.meta=off&iss.only=marketdata,securities&marketdata.columns=LAST&securities.columns=PREVPRICE`,
+                    method: 'GET',
+                  })
+                ).data as { marketdata: { data: [[number]] }; securities: { data: [[number]] } };
 
-                  const { marketdata, securities } = stockResponse;
-                  const price = marketdata.data[0][0] || securities.data[0][0];
+                const { marketdata, securities } = stockResponse;
+                const price = marketdata.data[0][0] || securities.data[0][0];
 
-                  return { ticker, quantity, value: price * quantity };
-                }
+                return { ticker, quantity, value: price * quantity };
               }),
             )
-          )
-            .sort((a, b) => a.value + b.value)
-            .sort((a, b) => (a.ticker === 'RUB' ? -1 : 0));
+          ).sort((a, b) => a.value + b.value);
 
           const amount = stocks.reduce((accum, { value }) => accum + value, 0);
 

@@ -22,21 +22,20 @@ export const MONTHS = [
 export const BALANCES: { ticker: string; quantity: number }[] = [
   { ticker: 'TATNP', quantity: 2333 },
   { ticker: 'LKOH', quantity: 121 },
-  { ticker: 'PLZL', quantity: 32 },
+  { ticker: 'NVTK', quantity: 573 },
   { ticker: 'SIBN', quantity: 762 },
+  { ticker: 'PLZL', quantity: 32 },
   { ticker: 'CHMF', quantity: 337 },
-  { ticker: 'SNGSP', quantity: 5800 },
+  { ticker: 'FLOT', quantity: 4030 },
   { ticker: 'SBERP', quantity: 1290 },
-  { ticker: 'NVTK', quantity: 307 },
+  { ticker: 'SNGSP', quantity: 5800 },
   { ticker: 'PHOR', quantity: 49 },
-  { ticker: 'FLOT', quantity: 2980 },
   { ticker: 'SVCB', quantity: 5000 },
-  { ticker: 'RUB', quantity: 90991.78 },
+  { ticker: 'RUB', quantity: 689.05 },
 ];
 
 export const DEBT: { ticker: string; quantity: number }[] = [
   { ticker: 'TATNP', quantity: 96 },
-  { ticker: 'RUB', quantity: 75476.97 },
   { ticker: 'SIBN', quantity: 204 },
   { ticker: 'NVTK', quantity: 215 },
   { ticker: 'LKOH', quantity: 32 },
