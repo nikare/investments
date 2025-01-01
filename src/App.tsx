@@ -162,11 +162,16 @@ export const App = () => {
                   </td>
                   <td>
                     {isNumber(incomeLastMonth) ? (
-                      <Fragment>{incomeLastMonth?.toLocaleString('ru-RU')}&nbsp;₽</Fragment>
+                      <Fragment>
+                        {incomeLastMonth?.toLocaleString('ru-RU') === '-0'
+                          ? 0
+                          : incomeLastMonth?.toLocaleString('ru-RU')}
+                        &nbsp;₽
+                      </Fragment>
                     ) : (
                       '-'
                     )}
-                    {isNumber(incomeLastMonthInPercent) && (
+                    {isNumber(incomeLastMonthInPercent) && Number(incomeLastMonthInPercent) !== 0 && (
                       <span
                         className={Number(incomeLastMonthInPercent) > 0 ? 'positive-text' : 'negative-text'}>
                         {Number(incomeLastMonthInPercent) > 0 ? '▴' : '▾'}
