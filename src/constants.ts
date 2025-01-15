@@ -110,23 +110,25 @@ export const REAL_RESULTS: {
 };
 
 if (process.env.NODE_ENV === 'development') {
+  const firstPurchases = [
+    1499, 2199, 2499, 2599, 3686, 3700, 4599, 4990, 6999, 6999, 7499, 9999, 9999, 9999, 43200,
+  ].reduce((accum, value) => accum + value, 0);
+
+  console.log(`Будет потрачено на ништяки: ${firstPurchases.toLocaleString('ru-RU')} RUB`);
+
   const TOTAL_INVESTMENTS = 15000000;
   const invested = Object.values(REAL_RESULTS).reduce((accum, { invested }) => accum + invested, 0);
-  const timeLeft = (TOTAL_INVESTMENTS - invested) / 250000;
+  const timeLeft = (TOTAL_INVESTMENTS - invested) / (DEPOSIT * 2);
   const years = Math.floor(timeLeft / 12);
   const months = Math.ceil(timeLeft % 12);
 
   const yearsText = years ? `${years} ${normalText(years, 'years')}` : '';
   const monthsText = months ? `и ${months} ${normalText(months, 'months')}` : '';
 
-  console.log(`До жизни на дивиденды ${yearsText} ${monthsText}`);
-
-  const firstPurchases = [
-    1499, 2042, 2199, 2499, 2599, 3144, 3686, 3700, 4000, 4599, 4800, 4990, 4999, 6669, 6999, 6999, 6999,
-    7499, 7550, 8600, 9999, 9999, 9999, 10500, 12899, 12899, 13600, 14999, 18700, 18999, 21000, 28990, 37000,
-    42400, 43200, 48500, 51660, 51999, 57600, 71000, 71000, 82999, 98700, 179000, 329000, 423300,
-  ].reduce((accum, value) => accum + value, 0);
-  console.log(firstPurchases.toLocaleString('ru-RU') + ' RUB');
+  console.log('');
+  console.log(`Всего инвестировано: ${invested.toLocaleString('ru-RU')} RUB`);
+  console.log(`Осталось инвестировать: ${(TOTAL_INVESTMENTS - invested).toLocaleString('ru-RU')} RUB`);
+  console.log(`До жизни на дивиденды: ${yearsText} ${monthsText}`);
 }
 
 function normalText(value: number, type: 'years' | 'months' | 'days') {

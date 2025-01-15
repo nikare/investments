@@ -93,6 +93,7 @@ export const api = createApi({
           const amount = stocks.reduce((accum, { value }) => accum + value, 0);
 
           console.log('');
+          console.log('Долг из активов:');
 
           stocks.forEach(({ ticker, quantity, value }, index) => {
             if (ticker === 'RUB') {
