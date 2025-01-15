@@ -45,7 +45,7 @@ export const DEBT: { ticker: string; quantity: number }[] = [
 ];
 
 export const REAL_RESULTS: {
-  [key: number]: { invested: number; capitalOnLastDay: number } | undefined;
+  [key: number]: { invested: number; capitalOnLastDay: number };
 } = {
   1: { invested: 134000, capitalOnLastDay: 155533.01 }, // 31 Мая 2023
   2: { invested: 116000, capitalOnLastDay: 278420.3 }, // 30 Июня 2023
@@ -108,3 +108,33 @@ export const REAL_RESULTS: {
   // 59: { invested: 0, capitalOnLastDay: 0 }, // 31 Марта 2028
   // 60: { invested: 0, capitalOnLastDay: 0 }, // 30 Апреля 2028
 };
+
+if (process.env.NODE_ENV === 'development') {
+  const TOTAL_INVESTMENTS = 15000000;
+  const invested = Object.values(REAL_RESULTS).reduce((accum, { invested }) => accum + invested, 0);
+  const timeLeft = (TOTAL_INVESTMENTS - invested) / 250000;
+  const years = Math.floor(timeLeft / 12);
+  const months = Math.ceil(timeLeft % 12);
+
+  const yearsText = years ? `${years} ${normalText(years, 'years')}` : '';
+  const monthsText = months ? `и ${months} ${normalText(months, 'months')}` : '';
+
+  console.log(`До жизни на дивиденды ${yearsText} ${monthsText}`);
+
+  const firstPurchases = [
+    1499, 2042, 2199, 2499, 2599, 3144, 3686, 3700, 4000, 4599, 4800, 4990, 4999, 6669, 6999, 6999, 6999,
+    7499, 7550, 8600, 9999, 9999, 9999, 10500, 12899, 12899, 13600, 14999, 18700, 18999, 21000, 28990, 37000,
+    42400, 43200, 48500, 51660, 51999, 57600, 71000, 71000, 82999, 98700, 179000, 329000, 423300,
+  ].reduce((accum, value) => accum + value, 0);
+  console.log(firstPurchases.toLocaleString('ru-RU') + ' RUB');
+}
+
+function normalText(value: number, type: 'years' | 'months' | 'days') {
+  if (type === 'years') {
+    return value % 10 === 1 ? 'год' : value % 10 > 4 ? 'лет' : 'года';
+  }
+
+  if (type === 'months') {
+    return value % 10 === 1 ? 'месяц' : value % 10 > 4 ? 'месяцев' : 'месяца';
+  }
+}

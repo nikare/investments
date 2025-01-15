@@ -92,6 +92,8 @@ export const api = createApi({
 
           const amount = stocks.reduce((accum, { value }) => accum + value, 0);
 
+          console.log('');
+
           stocks.forEach(({ ticker, quantity, value }, index) => {
             if (ticker === 'RUB') {
               console.log(`${index + 1}. ${ticker} - ${value.toLocaleString('ru-RU')} ₽`);
@@ -101,7 +103,6 @@ export const api = createApi({
           });
 
           console.log(`Итого: ${amount.toLocaleString('ru-RU')} ₽`);
-          console.log('');
 
           return { data: undefined };
         },
@@ -111,4 +112,4 @@ export const api = createApi({
   },
 });
 
-export const { useGetStocksQuery, useLazyGetDebtQuery } = api;
+export const { useGetStocksQuery, useGetDebtQuery } = api;

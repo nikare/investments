@@ -2,27 +2,22 @@ import { useEffect, useState, Fragment } from 'react';
 
 import { DEPOSIT, DIVIDENDS_YIELD, INFLATION, MONTHS, PERIOD, REAL_RESULTS, START_YEAR } from './constants';
 import { IData } from './interfaces';
-import { useGetStocksQuery, CACHE_TIME, useLazyGetDebtQuery } from 'store';
-
-export const IS_DEV = process.env.NODE_ENV === 'development';
+import { useGetStocksQuery, CACHE_TIME, useGetDebtQuery } from 'store';
 
 export const App = () => {
   const [dataArray, setDataArray] = useState<IData[]>([]);
   const { data: currentCapital, refetch: refetchCurrentCapital } = useGetStocksQuery();
-  const [refetchDebt] = useLazyGetDebtQuery();
+  useGetDebtQuery();
 
   useEffect(() => {
-    if (IS_DEV) refetchDebt();
-
     const intervalId = setInterval(() => {
       refetchCurrentCapital();
-      if (IS_DEV) refetchDebt();
     }, CACHE_TIME * 1000);
 
     return () => {
       clearInterval(intervalId);
     };
-  }, [refetchCurrentCapital, refetchDebt]);
+  }, [refetchCurrentCapital]);
 
   useEffect(() => {
     const newDataArray: IData[] = [];
