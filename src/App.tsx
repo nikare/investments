@@ -2,11 +2,12 @@ import { useEffect, useState, Fragment } from 'react';
 
 import { DEPOSIT, DIVIDENDS_YIELD, INFLATION, MONTHS, PERIOD, REAL_RESULTS, START_YEAR } from './constants';
 import { IData } from './interfaces';
-import { useGetStocksQuery, CACHE_TIME, useGetDebtQuery } from 'store';
+import { useGetStocksQuery, CACHE_TIME, useGetDebtQuery, useGetCurrencyQuery } from 'store';
 
 export const App = () => {
   const [dataArray, setDataArray] = useState<IData[]>([]);
   const { data: currentCapital, refetch: refetchCurrentCapital } = useGetStocksQuery();
+  useGetCurrencyQuery();
   useGetDebtQuery();
 
   useEffect(() => {

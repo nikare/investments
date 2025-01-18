@@ -4,6 +4,9 @@ export const PERIOD = 10;
 export const DIVIDENDS_YIELD = 35;
 export const INFLATION = 17.737;
 
+export const BOAT_PRICE = 35900; // EUR
+export const BOAT_BALANCE = 0;
+
 export const MONTHS = [
   'Май',
   'Июнь',
@@ -37,7 +40,7 @@ export const BALANCES: { ticker: string; quantity: number }[] = [
 export const DEBT: { ticker: string; quantity: number }[] = [
   { ticker: 'TATNP', quantity: 96 },
   { ticker: 'SIBN', quantity: 204 },
-  { ticker: 'NVTK', quantity: 215 },
+  { ticker: 'NVTK', quantity: 135 },
   { ticker: 'LKOH', quantity: 32 },
   { ticker: 'SBERP', quantity: 990 },
   { ticker: 'PLZL', quantity: 21 },
@@ -110,15 +113,13 @@ export const REAL_RESULTS: {
 };
 
 if (process.env.NODE_ENV === 'development') {
-  const firstPurchases = [
-    1499, 2199, 2499, 2599, 3686, 3700, 4599, 4990, 6999, 6999, 7499, 9999, 9999, 9999, 43200,
-  ].reduce((accum, value) => accum + value, 0);
+  const firstPurchases = [7999, 7999, 9999, 10999].reduce((accum, value) => accum + value, 0);
 
   console.log(`Будет потрачено на ништяки: ${firstPurchases.toLocaleString('ru-RU')} RUB`);
 
   const TOTAL_INVESTMENTS = 15000000;
   const invested = Object.values(REAL_RESULTS).reduce((accum, { invested }) => accum + invested, 0);
-  const timeLeft = (TOTAL_INVESTMENTS - invested) / (DEPOSIT * 2);
+  const timeLeft = (TOTAL_INVESTMENTS - invested) / 300000;
   const years = Math.floor(timeLeft / 12);
   const months = Math.ceil(timeLeft % 12);
 
