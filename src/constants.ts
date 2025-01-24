@@ -25,7 +25,7 @@ export const MONTHS = [
 export const BALANCES: { ticker: string; quantity: number }[] = [
   { ticker: 'TATNP', quantity: 2333 },
   { ticker: 'LKOH', quantity: 121 },
-  { ticker: 'NVTK', quantity: 573 },
+  { ticker: 'NVTK', quantity: 607 },
   { ticker: 'SIBN', quantity: 762 },
   { ticker: 'PLZL', quantity: 32 },
   { ticker: 'CHMF', quantity: 337 },
@@ -34,7 +34,7 @@ export const BALANCES: { ticker: string; quantity: number }[] = [
   { ticker: 'SNGSP', quantity: 5800 },
   { ticker: 'PHOR', quantity: 49 },
   { ticker: 'SVCB', quantity: 5000 },
-  { ticker: 'RUB', quantity: 775.55 },
+  { ticker: 'RUB', quantity: 983.99 },
 ];
 
 export const DEBT: { ticker: string; quantity: number }[] = [
@@ -113,7 +113,7 @@ export const REAL_RESULTS: {
 };
 
 if (process.env.NODE_ENV === 'development') {
-  const firstPurchases = [7999, 7999, 9999, 10999].reduce((accum, value) => accum + value, 0);
+  const firstPurchases = [7999, 7999, 9999, 10999, 77540].reduce((accum, value) => accum + value, 0);
 
   console.log(`Будет потрачено на ништяки: ${firstPurchases.toLocaleString('ru-RU')} RUB`);
 
