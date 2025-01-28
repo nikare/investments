@@ -113,10 +113,6 @@ export const REAL_RESULTS: {
 };
 
 if (process.env.NODE_ENV === 'development') {
-  const firstPurchases = [7999, 7999, 9999, 10999, 77540].reduce((accum, value) => accum + value, 0);
-
-  console.log(`Будет потрачено на ништяки: ${firstPurchases.toLocaleString('ru-RU')} RUB`);
-
   const TOTAL_INVESTMENTS = 15000000;
   const invested = Object.values(REAL_RESULTS).reduce((accum, { invested }) => accum + invested, 0);
   const timeLeft = (TOTAL_INVESTMENTS - invested) / 300000;
@@ -126,7 +122,6 @@ if (process.env.NODE_ENV === 'development') {
   const yearsText = years ? `${years} ${normalText(years, 'years')}` : '';
   const monthsText = months ? `и ${months} ${normalText(months, 'months')}` : '';
 
-  console.log('');
   console.log(`Всего инвестировано: ${invested.toLocaleString('ru-RU')} RUB`);
   console.log(`Осталось инвестировать: ${(TOTAL_INVESTMENTS - invested).toLocaleString('ru-RU')} RUB`);
   console.log(`До жизни на дивиденды: ${yearsText} ${monthsText}`);
