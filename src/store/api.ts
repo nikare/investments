@@ -1,6 +1,6 @@
 import { BaseQueryFn, createApi } from '@reduxjs/toolkit/query/react';
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
-import { BALANCES, DEBT, BOAT_PRICE, BOAT_BALANCE } from '../constants';
+import { BALANCES, DEBT, BOAT_PRICE, BOAT_BALANCE, IS_DEV } from '../constants';
 
 type BaseQuery = BaseQueryFn<{
   params?: AxiosRequestConfig['params'];
@@ -72,6 +72,7 @@ export const api = createApi({
 
       getDebt: build.query<void, void>({
         async queryFn(_arg, _api, _extraOptions, baseQuery) {
+          if (!IS_DEV) return { data: undefined };
           const stocks = (
             await Promise.all(
               DEBT.map(async ({ ticker, quantity }) => {
@@ -112,6 +113,7 @@ export const api = createApi({
 
       getCurrency: build.query<void, void>({
         async queryFn(_arg, _api, _extraOptions, baseQuery) {
+          if (!IS_DEV) return { data: undefined };
           const currency = (
             await baseQuery({
               url: 'statistics/engines/currency/markets/selt/rates.json?iss.meta=off&iss.only=cbrf&cbrf.columns=CBRF_EUR_LAST',
