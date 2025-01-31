@@ -72,8 +72,8 @@ export const REAL_RESULTS: {
   18: { invested: 250000, capitalOnLastDay: 4282603.47 }, // 31 октября 2024
   19: { invested: 250000, capitalOnLastDay: 4584487.87 }, // 30 ноября 2024
   20: { invested: 500000, capitalOnLastDay: 5943664.15 }, // 31 декабря 2024
-  21: { invested: 0, capitalOnLastDay: 0 }, // 31 Января 2025
-  // 22: { invested: 0, capitalOnLastDay: 0 }, // 28 Февраля 2025
+  21: { invested: 0, capitalOnLastDay: 5996210.19 }, // 31 Января 2025
+  22: { invested: 0, capitalOnLastDay: 0 }, // 28 Февраля 2025
   // 23: { invested: 0, capitalOnLastDay: 0 }, // 31 Марта 2025
   // 24: { invested: 0, capitalOnLastDay: 0 }, // 30 Апреля 2025
   // 25: { invested: 0, capitalOnLastDay: 0 }, // 31 мая 2025
