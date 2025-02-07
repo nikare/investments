@@ -6,9 +6,6 @@ export const PERIOD = 10;
 export const DIVIDENDS_YIELD = 35;
 export const INFLATION = 17.737;
 
-export const BOAT_PRICE = 35900; // EUR
-export const BOAT_BALANCE = 0;
-
 export const MONTHS = [
   'Май',
   'Июнь',
@@ -40,7 +37,7 @@ export const BALANCES: { ticker: string; quantity: number }[] = [
 ];
 
 export const DEBT: { ticker: string; quantity: number }[] = [
-  { ticker: 'NVTK', quantity: 52 },
+  { ticker: 'NVTK', quantity: 49 },
   { ticker: 'LKOH', quantity: 32 },
   { ticker: 'SBERP', quantity: 990 },
   { ticker: 'SIBN', quantity: 204 },

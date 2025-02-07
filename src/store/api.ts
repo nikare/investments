@@ -1,6 +1,6 @@
 import { BaseQueryFn, createApi } from '@reduxjs/toolkit/query/react';
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
-import { BALANCES, DEBT, BOAT_PRICE, BOAT_BALANCE, IS_DEV } from '../constants';
+import { BALANCES, DEBT, IS_DEV } from '../constants';
 
 type BaseQuery = BaseQueryFn<{
   params?: AxiosRequestConfig['params'];
@@ -33,7 +33,7 @@ const axiosBaseQuery =
     }
   };
 
-export const CACHE_TIME = 15;
+export const CACHE_TIME = 15000;
 
 export const api = createApi({
   reducerPath: 'baseApi',
@@ -67,7 +67,6 @@ export const api = createApi({
 
           return { data: balances };
         },
-        keepUnusedDataFor: CACHE_TIME,
       }),
 
       getDebt: build.query<void, void>({
@@ -108,34 +107,9 @@ export const api = createApi({
 
           return { data: undefined };
         },
-        keepUnusedDataFor: CACHE_TIME,
-      }),
-
-      getCurrency: build.query<void, void>({
-        async queryFn(_arg, _api, _extraOptions, baseQuery) {
-          if (!IS_DEV) return { data: undefined };
-          const currency = (
-            await baseQuery({
-              url: 'statistics/engines/currency/markets/selt/rates.json?iss.meta=off&iss.only=cbrf&cbrf.columns=CBRF_EUR_LAST',
-              method: 'GET',
-            })
-          ).data as { cbrf: { data: [[number]] } };
-
-          const eur = currency.cbrf.data[0][0];
-          const boatPrice = BOAT_PRICE * eur;
-          const remains = boatPrice - BOAT_BALANCE;
-
-          console.log('');
-          console.log(`Стоимость Viko S26 (8.50 м): ${boatPrice.toLocaleString('ru-RU')} RUB`);
-          console.log(`Накоплено: ${BOAT_BALANCE.toLocaleString('ru-RU')} RUB`);
-          console.log(`Осталось накопить: ${remains.toLocaleString('ru-RU')} RUB`);
-
-          return { data: undefined };
-        },
-        keepUnusedDataFor: CACHE_TIME,
       }),
     };
   },
 });
 
-export const { useGetStocksQuery, useGetDebtQuery, useGetCurrencyQuery } = api;
+export const { useGetStocksQuery, useGetDebtQuery } = api;
