@@ -1,6 +1,7 @@
 import { BaseQueryFn, createApi } from '@reduxjs/toolkit/query/react';
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import { BALANCES, DEBT, IS_DEV } from '../constants';
+import { store } from './store';
 
 type BaseQuery = BaseQueryFn<{
   params?: AxiosRequestConfig['params'];
@@ -67,11 +68,14 @@ export const api = createApi({
 
           return { data: balances };
         },
+        keepUnusedDataFor: 900,
       }),
 
       getDebt: build.query<void, void>({
         async queryFn(_arg, _api, _extraOptions, baseQuery) {
           if (!IS_DEV) return { data: undefined };
+          const currentCapital = (await store.dispatch(api.endpoints.getStocks.initiate())).data;
+
           const stocks = (
             await Promise.all(
               DEBT.map(async ({ ticker, quantity }) => {
@@ -105,8 +109,14 @@ export const api = createApi({
 
           console.log(`Итого: ${amount.toLocaleString('ru-RU')} ₽`);
 
+          if (currentCapital) {
+            console.log(' ');
+            console.log(`Реальный капитал без долга: ${(currentCapital - amount).toLocaleString('ru-RU')} ₽`);
+          }
+
           return { data: undefined };
         },
+        keepUnusedDataFor: 900,
       }),
     };
   },
