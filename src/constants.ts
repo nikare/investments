@@ -28,18 +28,18 @@ export const BALANCES: { ticker: string; quantity: number }[] = [
   { ticker: 'PLZL', quantity: 32 },
   { ticker: 'SIBN', quantity: 762 },
   { ticker: 'CHMF', quantity: 337 },
-  { ticker: 'FLOT', quantity: 4180 },
   { ticker: 'SBERP', quantity: 1290 },
+  { ticker: 'FLOT', quantity: 4180 },
   { ticker: 'PHOR', quantity: 49 },
   { ticker: 'SNGSP', quantity: 5800 },
   { ticker: 'BSPB', quantity: 630 },
   { ticker: 'SVCB', quantity: 5000 },
-  { ticker: 'RUB', quantity: 1025.53 },
+  { ticker: 'RUB', quantity: 3216.69 },
 ];
 
 export const DEBT: { ticker: string; quantity: number }[] = [
-  { ticker: 'LKOH', quantity: 26 },
-  { ticker: 'SBERP', quantity: 970 },
+  { ticker: 'LKOH', quantity: 25 },
+  { ticker: 'SBERP', quantity: 950 },
   { ticker: 'SIBN', quantity: 204 },
   { ticker: 'PLZL', quantity: 21 },
   { ticker: 'TATNP', quantity: 96 },
