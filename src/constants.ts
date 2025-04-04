@@ -25,22 +25,22 @@ export const BALANCES: { ticker: string; quantity: number }[] = [
   { ticker: 'TATNP', quantity: 2333 },
   { ticker: 'LKOH', quantity: 156 },
   { ticker: 'NVTK', quantity: 607 },
+  { ticker: 'SNGSP', quantity: 10550 },
   { ticker: 'PLZL', quantity: 320 },
   { ticker: 'SIBN', quantity: 762 },
-  { ticker: 'CHMF', quantity: 337 },
   { ticker: 'SBERP', quantity: 1290 },
+  { ticker: 'CHMF', quantity: 337 },
   { ticker: 'FLOT', quantity: 4180 },
   { ticker: 'PHOR', quantity: 49 },
-  { ticker: 'SNGSP', quantity: 5800 },
   { ticker: 'BSPB', quantity: 630 },
   { ticker: 'SVCB', quantity: 5000 },
-  { ticker: 'RUB', quantity: 3216.69 },
+  { ticker: 'RUB', quantity: 457.02 },
 ];
 
 export const DEBT: { ticker: string; quantity: number }[] = [
-  { ticker: 'LKOH', quantity: 25 },
-  { ticker: 'SBERP', quantity: 950 },
-  { ticker: 'SIBN', quantity: 204 },
+  { ticker: 'LKOH', quantity: 23 },
+  { ticker: 'SBERP', quantity: 930 },
+  { ticker: 'SIBN', quantity: 203 },
   { ticker: 'PLZL', quantity: 210 },
   { ticker: 'TATNP', quantity: 96 },
   { ticker: 'CHMF', quantity: 336 },
@@ -73,7 +73,7 @@ export const REAL_RESULTS: {
   21: { invested: 0, capitalOnLastDay: 5996210.19 }, // 31 Января 2025
   22: { invested: 250000, capitalOnLastDay: 6706475.13 }, // 28 Февраля 2025
   23: { invested: 250000, capitalOnLastDay: 6483764.19 }, // 31 Марта 2025
-  24: { invested: 0, capitalOnLastDay: 0 }, // 30 Апреля 2025
+  24: { invested: 250000, capitalOnLastDay: 0 }, // 30 Апреля 2025
   // 25: { invested: 0, capitalOnLastDay: 0 }, // 31 мая 2025
   // 26: { invested: 0, capitalOnLastDay: 0 }, // 30 июня 2025
   // 27: { invested: 0, capitalOnLastDay: 0 }, // 31 июля 2025
