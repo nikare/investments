@@ -115,7 +115,7 @@ export const REAL_RESULTS: {
 if (IS_DEV) {
   const TOTAL_INVESTMENTS = 15000000;
   const invested = Object.values(REAL_RESULTS).reduce((accum, { invested }) => accum + invested, 0);
-  const timeLeft = (TOTAL_INVESTMENTS - invested) / 250000;
+  const timeLeft = (TOTAL_INVESTMENTS - invested) / 125000;
   const years = Math.floor(timeLeft / 12);
   const months = Math.ceil(timeLeft % 12);
 
@@ -125,6 +125,17 @@ if (IS_DEV) {
   console.log(`Всего инвестировано: ${invested.toLocaleString('ru-RU')} RUB`);
   console.log(`Осталось инвестировать: ${(TOTAL_INVESTMENTS - invested).toLocaleString('ru-RU')} RUB`);
   console.log(`До жизни на дивиденды: ${yearsText} ${monthsText}`);
+
+  const investedPeriod = Object.keys(REAL_RESULTS).length - 1;
+  const fasterPlanned = PERIOD * 12 - years * 12 - months - investedPeriod;
+
+  const fasterYears = Math.floor(fasterPlanned / 12);
+  const fasterMonths = Math.ceil(fasterPlanned % 12);
+
+  const fasterYearsText = fasterYears ? `${fasterYears} ${normalText(fasterYears, 'years')}` : '';
+  const fasterMonthsText = fasterMonths ? `и ${fasterMonths} ${normalText(fasterMonths, 'months')}` : '';
+
+  console.log(`Раньше срока на ${fasterYearsText} ${fasterMonthsText}`);
 }
 
 function normalText(value: number, type: 'years' | 'months' | 'days') {
@@ -133,6 +144,6 @@ function normalText(value: number, type: 'years' | 'months' | 'days') {
   }
 
   if (type === 'months') {
-    return value % 10 === 1 ? 'месяц' : value % 10 > 4 ? 'месяцев' : 'месяца';
+    return value % 12 === 1 ? 'месяц' : value % 12 > 4 ? 'месяцев' : 'месяца';
   }
 }
