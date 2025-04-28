@@ -95,14 +95,14 @@ export const App = () => {
   }
 
   const totalCapital = Math.round(dataArray[dataArray.length - 1].capital);
-  const passiveIncome = Math.round((totalCapital / 100) * 10);
+  const passiveIncome = Math.round((totalCapital / 100) * 12);
   const passiveIncomeInMonth = Math.round(passiveIncome / 12);
 
   return (
     <div className="app">
       <h1 className="title">Инвест план</h1>
       <table className="table pure-table">
-        <caption>Минимальное пополнение портфеля - 125 000 ₽ в месяц</caption>
+        <caption>Минимальное пополнение портфеля - 100 000 ₽ в месяц</caption>
         <thead>
           <tr>
             <th>#</th>
