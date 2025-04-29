@@ -1,10 +1,10 @@
 export const IS_DEV = process.env.NODE_ENV === 'development';
 
 export const START_YEAR = 2023;
-export const DEPOSIT = 100000;
+export const DEPOSIT = 125000;
 export const PERIOD = 10;
-export const DIVIDENDS_YIELD = 32.661;
-export const INFLATION = 19.999;
+export const DIVIDENDS_YIELD = 25;
+export const INFLATION = 19.765;
 
 export const MONTHS = [
   'Май',
@@ -38,13 +38,13 @@ export const BALANCES: { ticker: string; quantity: number }[] = [
 ];
 
 export const DEBT: { ticker: string; quantity: number }[] = [
-  { ticker: 'LKOH', quantity: 16 },
   { ticker: 'SBERP', quantity: 920 },
   { ticker: 'CHMF', quantity: 336 },
   { ticker: 'TATNP', quantity: 93 },
   { ticker: 'NVTK', quantity: 46 },
   { ticker: 'SIBN', quantity: 203 },
   { ticker: 'PLZL', quantity: 210 },
+  { ticker: 'LKOH', quantity: 16 },
 ];
 
 export const REAL_RESULTS: {
@@ -113,7 +113,7 @@ export const REAL_RESULTS: {
 };
 
 if (IS_DEV) {
-  const TOTAL_INVESTMENTS = 12000000;
+  const TOTAL_INVESTMENTS = 15000000;
   const invested = Object.values(REAL_RESULTS).reduce((accum, { invested }) => accum + invested, 0);
   const timeLeft = (TOTAL_INVESTMENTS - invested) / 250000;
   const years = Math.floor(timeLeft / 12);

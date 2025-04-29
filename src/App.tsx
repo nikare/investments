@@ -102,7 +102,7 @@ export const App = () => {
     <div className="app">
       <h1 className="title">Инвест план</h1>
       <table className="table pure-table">
-        <caption>Минимальное пополнение портфеля - 100 000 ₽ в месяц</caption>
+        <caption>Минимальное пополнение портфеля - {DEPOSIT.toLocaleString('ru-RU')} ₽ в месяц</caption>
         <thead>
           <tr>
             <th>#</th>
