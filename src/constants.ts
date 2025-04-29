@@ -34,7 +34,7 @@ export const BALANCES: { ticker: string; quantity: number }[] = [
   { ticker: 'PHOR', quantity: 49 },
   { ticker: 'BSPB', quantity: 630 },
   { ticker: 'SVCB', quantity: 5000 },
-  { ticker: 'RUB', quantity: 457.02 },
+  { ticker: 'RUB', quantity: 20780.02 },
 ];
 
 export const DEBT: { ticker: string; quantity: number }[] = [
