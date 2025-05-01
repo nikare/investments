@@ -34,7 +34,7 @@ export const BALANCES: { ticker: string; quantity: number }[] = [
   { ticker: 'PHOR', quantity: 49 },
   { ticker: 'BSPB', quantity: 630 },
   { ticker: 'SVCB', quantity: 5000 },
-  { ticker: 'RUB', quantity: 2492.38 },
+  { ticker: 'RUB', quantity: 252492.38 },
 ];
 
 export const DEBT: { ticker: string; quantity: number }[] = [
@@ -73,8 +73,8 @@ export const REAL_RESULTS: {
   21: { invested: 0, capitalOnLastDay: 5996210.19 }, // 31 Января 2025
   22: { invested: 250000, capitalOnLastDay: 6706475.13 }, // 28 Февраля 2025
   23: { invested: 250000, capitalOnLastDay: 6483764.19 }, // 31 Марта 2025
-  24: { invested: 250000, capitalOnLastDay: 0 }, // 30 Апреля 2025
-  // 25: { invested: 0, capitalOnLastDay: 0 }, // 31 мая 2025
+  24: { invested: 250000, capitalOnLastDay: 6653373.23 }, // 30 Апреля 2025
+  25: { invested: 250000, capitalOnLastDay: 0 }, // 31 мая 2025
   // 26: { invested: 0, capitalOnLastDay: 0 }, // 30 июня 2025
   // 27: { invested: 0, capitalOnLastDay: 0 }, // 31 июля 2025
   // 28: { invested: 0, capitalOnLastDay: 0 }, // 31 августа 2025
