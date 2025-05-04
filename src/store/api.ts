@@ -92,7 +92,7 @@ export const api = createApi({
                 return { ticker, quantity, value: price * quantity };
               }),
             )
-          ).sort((a, b) => a.value + b.value);
+          ).sort((a, b) => a.value - b.value);
 
           const amount = stocks.reduce((accum, { value }) => accum + value, 0);
 
