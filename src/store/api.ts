@@ -79,17 +79,21 @@ export const api = createApi({
           const stocks = (
             await Promise.all(
               DEBT.map(async ({ ticker, quantity }) => {
-                const stockResponse = (
-                  await baseQuery({
-                    url: `engines/stock/markets/shares/boards/TQBR/securities/${ticker}.json?iss.meta=off&iss.only=marketdata,securities&marketdata.columns=LAST&securities.columns=PREVPRICE`,
-                    method: 'GET',
-                  })
-                ).data as { marketdata: { data: [[number]] }; securities: { data: [[number]] } };
+                if (ticker === 'RUB') {
+                  return { ticker, quantity, value: quantity };
+                } else {
+                  const stockResponse = (
+                    await baseQuery({
+                      url: `engines/stock/markets/shares/boards/TQBR/securities/${ticker}.json?iss.meta=off&iss.only=marketdata,securities&marketdata.columns=LAST&securities.columns=PREVPRICE`,
+                      method: 'GET',
+                    })
+                  ).data as { marketdata: { data: [[number]] }; securities: { data: [[number]] } };
 
-                const { marketdata, securities } = stockResponse;
-                const price = marketdata.data[0][0] || securities.data[0][0];
+                  const { marketdata, securities } = stockResponse;
+                  const price = marketdata.data[0][0] || securities.data[0][0];
 
-                return { ticker, quantity, value: price * quantity };
+                  return { ticker, quantity, value: price * quantity };
+                }
               }),
             )
           ).sort((a, b) => a.value - b.value);
