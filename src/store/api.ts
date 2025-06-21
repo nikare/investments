@@ -10,6 +10,8 @@ type BaseQuery = BaseQueryFn<{
   url: string;
 }>;
 
+type Stock = (typeof DEBT)[0] & { value: number };
+
 const axiosBaseQuery =
   ({ baseUrl }: { baseUrl: string } = { baseUrl: '' }): BaseQuery =>
   async ({ url, method, data, params }) => {
@@ -76,7 +78,7 @@ export const api = createApi({
           if (!IS_DEV) return { data: undefined };
           const currentCapital = (await store.dispatch(api.endpoints.getStocks.initiate())).data;
 
-          const stocks = (
+          const stocks: Stock[] = (
             await Promise.all(
               DEBT.map(async ({ ticker, quantity }) => {
                 if (ticker === 'RUB') {
@@ -96,7 +98,12 @@ export const api = createApi({
                 }
               }),
             )
-          ).sort((a, b) => a.value - b.value);
+          )
+            .sort((a, b) => a.value - b.value)
+            .reduce((arr, stock) => {
+              stock.ticker === 'RUB' ? arr.unshift(stock) : arr.push(stock);
+              return arr;
+            }, [] as Stock[]);
 
           const amount = stocks.reduce((accum, { value }) => accum + value, 0);
 
