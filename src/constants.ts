@@ -42,7 +42,7 @@ export const BALANCES: { ticker: string; quantity: number }[] = [
 ];
 
 export const DEBT: { ticker: string; quantity: number }[] = [
-  { ticker: 'RUB', quantity: 197608.63 },
+  { ticker: 'RUB', quantity: 150000 },
   { ticker: 'TATNP', quantity: 71 },
   { ticker: 'NVTK', quantity: 46 },
   { ticker: 'LKOH', quantity: 15 },
@@ -118,7 +118,7 @@ export const REAL_RESULTS: {
 };
 
 if (IS_DEV) {
-  const TOTAL_INVESTMENTS = 15000000;
+  const TOTAL_INVESTMENTS = 10000000;
   const invested = Object.values(REAL_RESULTS).reduce((accum, { invested }) => accum + invested, 0);
   const timeLeft = (TOTAL_INVESTMENTS - invested) / 250000;
   const years = Math.floor(timeLeft / 12);
