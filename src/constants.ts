@@ -22,27 +22,27 @@ export const MONTHS = [
 ];
 
 export const BALANCES: { ticker: string; quantity: number }[] = [
-  { ticker: 'TATNP', quantity: 2374 },
-  { ticker: 'LKOH', quantity: 160 },
-  { ticker: 'SBERP', quantity: 2260 },
+  { ticker: 'TATNP', quantity: 2434 },
+  { ticker: 'LKOH', quantity: 166 },
+  { ticker: 'SBERP', quantity: 2370 },
+  { ticker: 'PLZL', quantity: 338 },
   { ticker: 'NVTK', quantity: 607 },
-  { ticker: 'SNGSP', quantity: 11040 },
-  { ticker: 'PLZL', quantity: 320 },
+  { ticker: 'SNGSP', quantity: 11690 },
   { ticker: 'SIBN', quantity: 762 },
   { ticker: 'CHMF', quantity: 337 },
-  { ticker: 'PHOR', quantity: 53 },
   { ticker: 'FLOT', quantity: 4180 },
-  { ticker: 'BSPB', quantity: 700 },
-  { ticker: 'RUB', quantity: 197608.63 },
+  { ticker: 'PHOR', quantity: 53 },
+  { ticker: 'BSPB', quantity: 790 },
+  { ticker: 'RUB', quantity: 100003.3 },
   { ticker: 'SVCB', quantity: 5000 },
-  { ticker: 'RENI', quantity: 220 },
-  { ticker: 'TRNFP', quantity: 19 },
-  { ticker: 'MOEX', quantity: 130 },
-  { ticker: 'HEAD', quantity: 8 },
+  { ticker: 'RENI', quantity: 500 },
+  { ticker: 'TRNFP', quantity: 43 },
+  { ticker: 'HEAD', quantity: 18 },
+  { ticker: 'MOEX', quantity: 300 },
 ];
 
 export const DEBT: { ticker: string; quantity: number }[] = [
-  { ticker: 'RUB', quantity: 150000 },
+  { ticker: 'RUB', quantity: 100000 },
   { ticker: 'TATNP', quantity: 71 },
   { ticker: 'NVTK', quantity: 46 },
   { ticker: 'LKOH', quantity: 15 },
@@ -81,7 +81,7 @@ export const REAL_RESULTS: {
   24: { invested: 250000, capitalOnLastDay: 6653373.23 }, // 30 Апреля 2025
   25: { invested: 250000, capitalOnLastDay: 6789771.64 }, // 31 мая 2025
   26: { invested: 250000, capitalOnLastDay: 7126491.93 }, // 30 июня 2025
-  27: { invested: 0, capitalOnLastDay: 0 }, // 31 июля 2025
+  27: { invested: 250000, capitalOnLastDay: 0 }, // 31 июля 2025
   // 28: { invested: 0, capitalOnLastDay: 0 }, // 31 августа 2025
   // 29: { invested: 0, capitalOnLastDay: 0 }, // 30 сентября 2025
   // 30: { invested: 0, capitalOnLastDay: 0 }, // 31 октября 2025
