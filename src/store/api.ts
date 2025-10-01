@@ -1,6 +1,6 @@
 import { BaseQueryFn, createApi } from '@reduxjs/toolkit/query/react';
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
-import { BALANCES, DEBT, IS_DEV } from '../constants';
+import { BALANCES, DEBT, IS_DEV, REAL_RESULTS } from '../constants';
 import { store } from './store';
 
 type BaseQuery = BaseQueryFn<{
@@ -123,6 +123,13 @@ export const api = createApi({
           if (currentCapital) {
             console.log(' ');
             console.log(`Реальный капитал без долга: ${(currentCapital - amount).toLocaleString('ru-RU')} ₽`);
+            console.log(
+              `Реальный доход: ${(
+                currentCapital -
+                amount -
+                Object.values(REAL_RESULTS).reduce((accum, { invested }) => accum + invested, 0)
+              ).toLocaleString('ru-RU')} ₽`,
+            );
           }
 
           return { data: undefined };
