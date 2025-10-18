@@ -47,6 +47,7 @@ export const DEBT: { ticker: string; quantity: number }[] = [
   { ticker: 'SIBN', quantity: 551 },
   { ticker: 'CHMF', quantity: 336 },
   { ticker: 'PLZL', quantity: 210 },
+  { ticker: 'RUB', quantity: 12944.5 },
 ];
 
 export const REAL_RESULTS: {
