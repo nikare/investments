@@ -38,7 +38,7 @@ export const BALANCES: { ticker: string; quantity: number }[] = [
   { ticker: 'RENI', quantity: 1360 },
   { ticker: 'MOEX', quantity: 670 },
   { ticker: 'SVCB', quantity: 5000 },
-  { ticker: 'RUB', quantity: 78500.32 },
+  { ticker: 'RUB', quantity: 110085.82 },
   { ticker: 'X5', quantity: 12 },
 ];
 
@@ -47,7 +47,7 @@ export const DEBT: { ticker: string; quantity: number }[] = [
   { ticker: 'SIBN', quantity: 551 },
   { ticker: 'CHMF', quantity: 336 },
   { ticker: 'PLZL', quantity: 210 },
-  { ticker: 'RUB', quantity: 21235.8 },
+  { ticker: 'RUB', quantity: 38281.25 },
 ];
 
 export const REAL_RESULTS: {
