@@ -117,6 +117,8 @@ export const REAL_RESULTS: {
 if (IS_DEV) {
   const TOTAL_INVESTMENTS = 15000000;
   const invested = Object.values(REAL_RESULTS).reduce((accum, { invested }) => accum + invested, 0);
+  const investLeft = TOTAL_INVESTMENTS - invested;
+
   const timeLeft = (TOTAL_INVESTMENTS - invested) / 250000;
   const years = Math.floor(timeLeft / 12);
   const months = Math.ceil(timeLeft % 12);
@@ -124,11 +126,14 @@ if (IS_DEV) {
   const yearsText = years ? `${years} ${normalText(years, 'years')} ` : '';
   const monthsText = months ? `${years ? `и ` : ''}${months} ${normalText(months, 'months')}` : '';
 
+  const investedInPercent = Math.floor((invested / (TOTAL_INVESTMENTS / 100)) * 100) / 100;
+  const investLeftInPercent = Math.ceil((investLeft / (TOTAL_INVESTMENTS / 100)) * 100) / 100;
+
   console.log(`План инвестиций: ${TOTAL_INVESTMENTS.toLocaleString('ru-RU')} RUB`);
   console.log('');
 
-  console.log(`Всего инвестировано: ${invested.toLocaleString('ru-RU')} RUB`);
-  console.log(`Осталось инвестировать: ${(TOTAL_INVESTMENTS - invested).toLocaleString('ru-RU')} RUB`);
+  console.log(`Всего инвестировано: ${invested.toLocaleString('ru-RU')} RUB (${investedInPercent}%)`);
+  console.log(`Осталось инвестировать: ${investLeft.toLocaleString('ru-RU')} RUB (${investLeftInPercent}%)`);
   console.log(`До жизни на дивиденды: ${yearsText}${monthsText}`);
 }
 
