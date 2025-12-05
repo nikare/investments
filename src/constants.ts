@@ -23,23 +23,23 @@ export const MONTHS = [
 
 export const BALANCES: { ticker: string; quantity: number }[] = [
   { ticker: 'TATNP', quantity: 2530 },
-  { ticker: 'LKOH', quantity: 191 },
-  { ticker: 'SBERP', quantity: 2879 },
+  { ticker: 'LKOH', quantity: 196 },
+  { ticker: 'SBERP', quantity: 2976 },
   { ticker: 'PLZL', quantity: 338 },
   { ticker: 'NVTK', quantity: 607 },
   { ticker: 'SNGSP', quantity: 13200 },
-  { ticker: 'BSPB', quantity: 1220 },
-  { ticker: 'PHOR', quantity: 56 },
+  { ticker: 'BSPB', quantity: 1300 },
   { ticker: 'SIBN', quantity: 762 },
+  { ticker: 'PHOR', quantity: 56 },
   { ticker: 'CHMF', quantity: 385 },
   { ticker: 'FLOT', quantity: 4180 },
-  { ticker: 'TRNFP', quantity: 165 },
-  { ticker: 'RENI', quantity: 1840 },
-  { ticker: 'HEAD', quantity: 64 },
+  { ticker: 'TRNFP', quantity: 186 },
+  { ticker: 'HEAD', quantity: 73 },
+  { ticker: 'RENI', quantity: 2130 },
+  { ticker: 'X5', quantity: 43 },
   { ticker: 'MOEX', quantity: 670 },
-  { ticker: 'X5', quantity: 30 },
   { ticker: 'SVCB', quantity: 5000 },
-  { ticker: 'RUB', quantity: 132.79 },
+  { ticker: 'RUB', quantity: 225.26 },
 ];
 
 export const DEBT: { ticker: string; quantity: number }[] = [
@@ -83,7 +83,7 @@ export const REAL_RESULTS: {
   29: { invested: 125000, capitalOnLastDay: 7623115.94 }, // 30 сентября 2025
   30: { invested: 225000, capitalOnLastDay: 7324736.24 }, // 31 октября 2025
   31: { invested: 225000, capitalOnLastDay: 8000332.12 }, // 30 ноября 2025
-  32: { invested: 0, capitalOnLastDay: 0 }, // 31 декабря 2025
+  32: { invested: 200000, capitalOnLastDay: 0 }, // 31 декабря 2025
   // 33: { invested: 0, capitalOnLastDay: 0 }, // 31 Января 2026
   // 34: { invested: 0, capitalOnLastDay: 0 }, // 28 Февраля 2026
   // 35: { invested: 0, capitalOnLastDay: 0 }, // 31 Марта 2026
@@ -135,6 +135,9 @@ if (IS_DEV) {
   console.log(`Всего инвестировано: ${invested.toLocaleString('ru-RU')} RUB (${investedInPercent}%)`);
   console.log(`Осталось инвестировать: ${investLeft.toLocaleString('ru-RU')} RUB (${investLeftInPercent}%)`);
   console.log(`До жизни на дивиденды: ${yearsText}${monthsText}`);
+
+  const behindSchedule = 250000 * 4 - (125000 + 225000 + 225000 + 200000);
+  console.log(`Отстаю от плана на ${behindSchedule.toLocaleString('ru-RU')} RUB`);
 }
 
 function normalText(value: number, type: 'years' | 'months' | 'days') {
@@ -148,49 +151,49 @@ function normalText(value: number, type: 'years' | 'months' | 'days') {
 }
 
 // const IMOEX_STOCKS: { ticker: string; value: number }[] = [
-//   { ticker: 'AFKS', value: -2.56 },
-//   { ticker: 'AFLT', value: 1.86 },
-//   { ticker: 'ALRS', value: 0.81 },
-//   { ticker: 'BSPB', value: 23.62 },
-//   { ticker: 'CBOM', value: 3.49 },
-//   { ticker: 'CHMF', value: 14.03 },
-//   { ticker: 'ENPG', value: -10.06 },
-//   { ticker: 'FLOT', value: 5.8 },
-//   { ticker: 'GAZP', value: 1.37 },
-//   { ticker: 'GMKN', value: 12.57 },
-//   { ticker: 'HEAD', value: 14.78 },
-//   { ticker: 'IRAO', value: 6.34 },
-//   { ticker: 'LKOH', value: 14.97 },
-//   { ticker: 'MAGN', value: 7.71 },
-//   { ticker: 'MDMG', value: 34.81 },
-//   { ticker: 'MOEX', value: 13.41 },
-//   { ticker: 'MSNG', value: 5.27 },
-//   { ticker: 'MTSS', value: 8.81 },
-//   { ticker: 'NLMK', value: 8.01 },
-//   { ticker: 'NVTK', value: 14.83 },
-//   { ticker: 'PHOR', value: 23.52 },
-//   { ticker: 'PIKK', value: 10.64 },
-//   { ticker: 'PLZL', value: 24.82 },
-//   { ticker: 'POSI', value: -10.09 },
-//   { ticker: 'RENI', value: 19.57 },
-//   { ticker: 'ROSN', value: 8.57 },
-//   { ticker: 'RTKM', value: 0.76 },
-//   { ticker: 'RUAL', value: -1.26 },
-//   // { ticker: 'SBER', value: 14.93 },
-//   { ticker: 'SBERP', value: 18.64 },
-//   // { ticker: 'SNGS', value: -0.52 },
-//   { ticker: 'SNGSP', value: 16.06 },
-//   { ticker: 'SVCB', value: -18.45 },
-//   { ticker: 'T', value: 7.18 },
-//   // { ticker: 'TATN', value: 18.71 },
-//   { ticker: 'TATNP', value: 24.89 },
-//   { ticker: 'TRNFP', value: 14.88 },
-//   { ticker: 'UGLD', value: -34.07 },
-//   { ticker: 'UPRO', value: 2.91 },
-//   { ticker: 'VKCO', value: -24.9 },
-//   { ticker: 'VTBR', value: -8.32 },
-//   { ticker: 'X5', value: 12.07 },
-//   { ticker: 'YDEX', value: 12.88 },
+//   { ticker: 'AFKS', value: -1.83 },
+//   { ticker: 'AFLT', value: 2.73 },
+//   { ticker: 'ALRS', value: 0.9 },
+//   { ticker: 'BSPB', value: 23.1 },
+//   { ticker: 'CBOM', value: 6.62 },
+//   { ticker: 'CHMF', value: 14.62 },
+//   { ticker: 'ENPG', value: -6.85 },
+//   { ticker: 'FLOT', value: 8.41 },
+//   { ticker: 'GAZP', value: 2.1 },
+//   { ticker: 'GMKN', value: 12.81 },
+//   { ticker: 'HEAD', value: 16.39 },
+//   { ticker: 'IRAO', value: 6.81 },
+//   { ticker: 'LKOH', value: 14.88 },
+//   { ticker: 'MAGN', value: 8.18 },
+//   { ticker: 'MDMG', value: 36.96 },
+//   { ticker: 'MOEX', value: 14.18 },
+//   { ticker: 'MSNG', value: 5.58 },
+//   { ticker: 'MTSS', value: 9.1 },
+//   { ticker: 'NLMK', value: 8.51 },
+//   { ticker: 'NVTK', value: 15.55 },
+//   { ticker: 'PHOR', value: 23.13 },
+//   { ticker: 'PIKK', value: 11.85 },
+//   { ticker: 'PLZL', value: 24.93 },
+//   { ticker: 'POSI', value: -12.2 },
+//   { ticker: 'RENI', value: 18.3 },
+//   { ticker: 'ROSN', value: 8.81 },
+//   { ticker: 'RTKM', value: 0.33 },
+//   { ticker: 'RUAL', value: -0.49 },
+//   // { ticker: 'SBER', value: 15.04 },
+//   { ticker: 'SBERP', value: 18.73 },
+//   // { ticker: 'SNGS', value: 0.3 },
+//   { ticker: 'SNGSP', value: 16.01 },
+//   { ticker: 'SVCB', value: -13.77 },
+//   { ticker: 'T', value: 8.33 },
+//   // { ticker: 'TATN', value: 19.15 },
+//   { ticker: 'TATNP', value: 25.15 },
+//   { ticker: 'TRNFP', value: 15.34 },
+//   { ticker: 'UGLD', value: -31.64 },
+//   { ticker: 'UPRO', value: 3.52 },
+//   { ticker: 'VKCO', value: -21.93 },
+//   { ticker: 'VTBR', value: -7.67 },
+//   { ticker: 'X5', value: 13.57 },
+//   { ticker: 'YDEX', value: 13.36 },
 // ]
 //   .filter(({ value }) => value > 12)
 //   .sort((a, b) => b.value - a.value)
