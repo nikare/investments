@@ -23,23 +23,24 @@ export const MONTHS = [
 
 export const BALANCES: { ticker: string; quantity: number }[] = [
   { ticker: 'TATNP', quantity: 2530 },
-  { ticker: 'LKOH', quantity: 196 },
-  { ticker: 'SBERP', quantity: 2976 },
+  { ticker: 'LKOH', quantity: 200 },
+  { ticker: 'SBERP', quantity: 3056 },
   { ticker: 'PLZL', quantity: 338 },
   { ticker: 'NVTK', quantity: 607 },
   { ticker: 'SNGSP', quantity: 13200 },
-  { ticker: 'BSPB', quantity: 1300 },
+  { ticker: 'BSPB', quantity: 1370 },
+  { ticker: 'CHMF', quantity: 385 },
   { ticker: 'SIBN', quantity: 762 },
   { ticker: 'PHOR', quantity: 56 },
-  { ticker: 'CHMF', quantity: 385 },
   { ticker: 'FLOT', quantity: 4180 },
-  { ticker: 'TRNFP', quantity: 186 },
-  { ticker: 'HEAD', quantity: 73 },
-  { ticker: 'RENI', quantity: 2130 },
-  { ticker: 'X5', quantity: 43 },
+  { ticker: 'TRNFP', quantity: 203 },
+  { ticker: 'HEAD', quantity: 81 },
+  { ticker: 'RENI', quantity: 2380 },
+  { ticker: 'X5', quantity: 51 },
   { ticker: 'MOEX', quantity: 670 },
   { ticker: 'SVCB', quantity: 5000 },
-  { ticker: 'RUB', quantity: 225.26 },
+  { ticker: 'CNRU', quantity: 53 },
+  { ticker: 'RUB', quantity: 277.23 },
 ];
 
 export const DEBT: { ticker: string; quantity: number }[] = [
@@ -83,7 +84,7 @@ export const REAL_RESULTS: {
   29: { invested: 125000, capitalOnLastDay: 7623115.94 }, // 30 сентября 2025
   30: { invested: 225000, capitalOnLastDay: 7324736.24 }, // 31 октября 2025
   31: { invested: 225000, capitalOnLastDay: 8000332.12 }, // 30 ноября 2025
-  32: { invested: 200000, capitalOnLastDay: 0 }, // 31 декабря 2025
+  32: { invested: 375000, capitalOnLastDay: 0 }, // 31 декабря 2025
   // 33: { invested: 0, capitalOnLastDay: 0 }, // 31 Января 2026
   // 34: { invested: 0, capitalOnLastDay: 0 }, // 28 Февраля 2026
   // 35: { invested: 0, capitalOnLastDay: 0 }, // 31 Марта 2026
@@ -135,9 +136,6 @@ if (IS_DEV) {
   console.log(`Всего инвестировано: ${invested.toLocaleString('ru-RU')} RUB (${investedInPercent}%)`);
   console.log(`Осталось инвестировать: ${investLeft.toLocaleString('ru-RU')} RUB (${investLeftInPercent}%)`);
   console.log(`До жизни на дивиденды: ${yearsText}${monthsText}`);
-
-  const behindSchedule = 250000 * 4 - (125000 + 225000 + 225000 + 200000);
-  console.log(`Отстаю от плана на ${behindSchedule.toLocaleString('ru-RU')} RUB`);
 }
 
 function normalText(value: number, type: 'years' | 'months' | 'days') {
@@ -151,49 +149,51 @@ function normalText(value: number, type: 'years' | 'months' | 'days') {
 }
 
 // const IMOEX_STOCKS: { ticker: string; value: number }[] = [
-//   { ticker: 'AFKS', value: -1.83 },
-//   { ticker: 'AFLT', value: 2.73 },
-//   { ticker: 'ALRS', value: 0.9 },
-//   { ticker: 'BSPB', value: 23.1 },
-//   { ticker: 'CBOM', value: 6.62 },
-//   { ticker: 'CHMF', value: 14.62 },
-//   { ticker: 'ENPG', value: -6.85 },
-//   { ticker: 'FLOT', value: 8.41 },
-//   { ticker: 'GAZP', value: 2.1 },
-//   { ticker: 'GMKN', value: 12.81 },
-//   { ticker: 'HEAD', value: 16.39 },
-//   { ticker: 'IRAO', value: 6.81 },
-//   { ticker: 'LKOH', value: 14.88 },
-//   { ticker: 'MAGN', value: 8.18 },
-//   { ticker: 'MDMG', value: 36.96 },
-//   { ticker: 'MOEX', value: 14.18 },
-//   { ticker: 'MSNG', value: 5.58 },
-//   { ticker: 'MTSS', value: 9.1 },
-//   { ticker: 'NLMK', value: 8.51 },
-//   { ticker: 'NVTK', value: 15.55 },
-//   { ticker: 'PHOR', value: 23.13 },
-//   { ticker: 'PIKK', value: 11.85 },
-//   { ticker: 'PLZL', value: 24.93 },
-//   { ticker: 'POSI', value: -12.2 },
-//   { ticker: 'RENI', value: 18.3 },
-//   { ticker: 'ROSN', value: 8.81 },
-//   { ticker: 'RTKM', value: 0.33 },
-//   { ticker: 'RUAL', value: -0.49 },
-//   // { ticker: 'SBER', value: 15.04 },
-//   { ticker: 'SBERP', value: 18.73 },
-//   // { ticker: 'SNGS', value: 0.3 },
-//   { ticker: 'SNGSP', value: 16.01 },
-//   { ticker: 'SVCB', value: -13.77 },
-//   { ticker: 'T', value: 8.33 },
-//   // { ticker: 'TATN', value: 19.15 },
-//   { ticker: 'TATNP', value: 25.15 },
-//   { ticker: 'TRNFP', value: 15.34 },
-//   { ticker: 'UGLD', value: -31.64 },
-//   { ticker: 'UPRO', value: 3.52 },
-//   { ticker: 'VKCO', value: -21.93 },
-//   { ticker: 'VTBR', value: -7.67 },
-//   { ticker: 'X5', value: 13.57 },
-//   { ticker: 'YDEX', value: 13.36 },
+//   { ticker: 'AFKS', value: -1.94 },
+//   { ticker: 'AFLT', value: 3.02 },
+//   { ticker: 'ALRS', value: 1.8 },
+//   { ticker: 'BSPB', value: 22.6 },
+//   { ticker: 'CBOM', value: 3.13 },
+//   { ticker: 'CHMF', value: 14.84 },
+//   { ticker: 'CNRU', value: 30.23 },
+//   { ticker: 'DOMRF', value: 0 },
+//   { ticker: 'ENPG', value: -3.72 },
+//   { ticker: 'FLOT', value: 7.2 },
+//   { ticker: 'GAZP', value: 2.05 },
+//   { ticker: 'GMKN', value: 13.77 },
+//   { ticker: 'HEAD', value: 15.2 },
+//   { ticker: 'IRAO', value: 7.42 },
+//   { ticker: 'LKOH', value: 15.13 },
+//   { ticker: 'MAGN', value: 8.75 },
+//   { ticker: 'MDMG', value: 37.51 },
+//   { ticker: 'MOEX', value: 14.58 },
+//   { ticker: 'MSNG', value: 6.29 },
+//   { ticker: 'MTSS', value: 9.01 },
+//   { ticker: 'NLMK', value: 8.39 },
+//   { ticker: 'NVTK', value: 15.49 },
+//   { ticker: 'OZON', value: 24.48 },
+//   { ticker: 'PHOR', value: 22.22 },
+//   { ticker: 'PIKK', value: 12.33 },
+//   { ticker: 'PLZL', value: 25.59 },
+//   { ticker: 'POSI', value: -15.9 },
+//   { ticker: 'RENI', value: 18.6 },
+//   { ticker: 'ROSN', value: 8.91 },
+//   { ticker: 'RTKM', value: 0.97 },
+//   { ticker: 'RUAL', value: 0.77 },
+//   // { ticker: 'SBER', value: 14.99 },
+//   { ticker: 'SBERP', value: 18.7 },
+//   // { ticker: 'SNGS', value: 0.52 },
+//   { ticker: 'SNGSP', value: 16.49 },
+//   { ticker: 'SVCB', value: -13.97 },
+//   { ticker: 'T', value: 8.65 },
+//   // { ticker: 'TATN', value: 18.91 },
+//   { ticker: 'TATNP', value: 24.88 },
+//   { ticker: 'TRNFP', value: 15.45 },
+//   { ticker: 'UGLD', value: -16.84 },
+//   { ticker: 'VKCO', value: -20.7 },
+//   { ticker: 'VTBR', value: -7.71 },
+//   { ticker: 'X5', value: 15.59 },
+//   { ticker: 'YDEX', value: 14.27 },
 // ]
 //   .filter(({ value }) => value > 12)
 //   .sort((a, b) => b.value - a.value)
