@@ -84,8 +84,8 @@ export const REAL_RESULTS: {
   29: { invested: 125000, capitalOnLastDay: 7623115.94 }, // 30 сентября 2025
   30: { invested: 225000, capitalOnLastDay: 7324736.24 }, // 31 октября 2025
   31: { invested: 225000, capitalOnLastDay: 8000332.12 }, // 30 ноября 2025
-  32: { invested: 375000, capitalOnLastDay: 0 }, // 31 декабря 2025
-  // 33: { invested: 0, capitalOnLastDay: 0 }, // 31 Января 2026
+  32: { invested: 375000, capitalOnLastDay: 8501346.69 }, // 31 декабря 2025
+  33: { invested: 0, capitalOnLastDay: 0 }, // 31 Января 2026
   // 34: { invested: 0, capitalOnLastDay: 0 }, // 28 Февраля 2026
   // 35: { invested: 0, capitalOnLastDay: 0 }, // 31 Марта 2026
   // 36: { invested: 0, capitalOnLastDay: 0 }, // 30 Апреля 2026
@@ -117,10 +117,11 @@ export const REAL_RESULTS: {
 
 if (IS_DEV) {
   const TOTAL_INVESTMENTS = 15000000;
+  const REAL_DEPOSIT = DEPOSIT * 2;
   const invested = Object.values(REAL_RESULTS).reduce((accum, { invested }) => accum + invested, 0);
   const investLeft = TOTAL_INVESTMENTS - invested;
 
-  const timeLeft = (TOTAL_INVESTMENTS - invested) / 250000;
+  const timeLeft = (TOTAL_INVESTMENTS - invested) / REAL_DEPOSIT;
   const years = Math.floor(timeLeft / 12);
   const months = Math.ceil(timeLeft % 12);
 
