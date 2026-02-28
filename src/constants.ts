@@ -86,8 +86,8 @@ export const REAL_RESULTS: {
   31: { invested: 225000, capitalOnLastDay: 8000332.12 }, // 30 ноября 2025
   32: { invested: 375000, capitalOnLastDay: 8501346.69 }, // 31 декабря 2025
   33: { invested: 100000, capitalOnLastDay: 8761480.14 }, // 31 Января 2026
-  34: { invested: 200000, capitalOnLastDay: 0 }, // 28 Февраля 2026
-  // 35: { invested: 0, capitalOnLastDay: 0 }, // 31 Марта 2026
+  34: { invested: 200000, capitalOnLastDay: 9083121.73 }, // 28 Февраля 2026
+  35: { invested: 0, capitalOnLastDay: 0 }, // 31 Марта 2026
   // 36: { invested: 0, capitalOnLastDay: 0 }, // 30 Апреля 2026
   // 37: { invested: 0, capitalOnLastDay: 0 }, // 31 мая 2026
   // 38: { invested: 0, capitalOnLastDay: 0 }, // 30 июня 2026
@@ -117,16 +117,8 @@ export const REAL_RESULTS: {
 
 if (IS_DEV) {
   const TOTAL_INVESTMENTS = 15000000;
-  const REAL_DEPOSIT = DEPOSIT * 2;
   const invested = Object.values(REAL_RESULTS).reduce((accum, { invested }) => accum + invested, 0);
   const investLeft = TOTAL_INVESTMENTS - invested;
-
-  const timeLeft = (TOTAL_INVESTMENTS - invested) / REAL_DEPOSIT;
-  const years = Math.floor(timeLeft / 12);
-  const months = Math.ceil(timeLeft % 12);
-
-  const yearsText = years ? `${years} ${normalText(years, 'years')} ` : '';
-  const monthsText = months ? `${years ? `и ` : ''}${months} ${normalText(months, 'months')}` : '';
 
   const investedInPercent = Math.floor((invested / (TOTAL_INVESTMENTS / 100)) * 100) / 100;
   const investLeftInPercent = Math.ceil((investLeft / (TOTAL_INVESTMENTS / 100)) * 100) / 100;
@@ -136,17 +128,6 @@ if (IS_DEV) {
 
   console.log(`Всего инвестировано: ${invested.toLocaleString('ru-RU')} RUB (${investedInPercent}%)`);
   console.log(`Осталось инвестировать: ${investLeft.toLocaleString('ru-RU')} RUB (${investLeftInPercent}%)`);
-  console.log(`До жизни на дивиденды: ${yearsText}${monthsText}`);
-}
-
-function normalText(value: number, type: 'years' | 'months' | 'days') {
-  if (type === 'years') {
-    return value % 10 === 1 ? 'год' : value % 10 > 4 ? 'лет' : 'года';
-  }
-
-  if (type === 'months') {
-    return value % 12 === 1 ? 'месяц' : value % 12 > 4 ? 'месяцев' : 'месяца';
-  }
 }
 
 // const IMOEX_STOCKS: { ticker: string; value: number }[] = [
